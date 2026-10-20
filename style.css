@@ -7483,3 +7483,19 @@ body[data-hc-theme="apple"] .sidebar-secondary-link.hc-liquid-current {
     background: transparent !important;
     box-shadow: none !important;
 }
+
+/* Connection recovery remains visible above the welcome experience. */
+.entry-status {
+    position: fixed;
+    z-index: 10000;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(28rem, calc(100% - 2rem));
+    padding: 1rem;
+    border-radius: 1rem;
+    background: #fff;
+    color: #1d1d1f;
+    box-shadow: 0 4px 24px #0003;
+}
+.entry-status p { margin-bottom: .75rem; }

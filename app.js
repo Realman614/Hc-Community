@@ -5064,23 +5064,32 @@ async function handleAuthenticatedEntry(event) {
         return;
     }
 
+    const entryStatus = document.getElementById("entryStatus");
+    const entryMessage = document.getElementById("entryMessage");
+    const retryEntryButton = document.getElementById("retryEntryButton");
+    entryStatus?.classList.remove("hidden");
+    if (entryMessage) entryMessage.textContent = "Loading your communities and posts…";
+    if (retryEntryButton) retryEntryButton.disabled = true;
+
     try {
         await Promise.all([
             refreshFirestoreCommunityState(),
             refreshFirestorePosts()
         ]);
     } catch (error) {
+        event?.detail?.onFailure?.();
+        if (entryMessage) entryMessage.textContent = error?.code === "permission-denied"
+            ? "Your community data could not be opened. Try again or contact the site administrator."
+            : "Your community data could not be loaded. Check your connection and try again.";
+        if (retryEntryButton) retryEntryButton.disabled = false;
         console.error(
             "Could not load Firestore community data:",
             error
         );
 
-        window.alert(
-            "HC-Community could not load shared Firestore data. Make sure the new Firestore rules are published, then reload."
-        );
         return;
     }
-
+    entryStatus?.classList.add("hidden");
 
     welcomeExperience.style.transition =
         `
@@ -5199,3 +5208,8 @@ window.addEventListener(
         updateWelcomeAnimations();
     }
 );
+
+// Retry the authenticated entry without requiring a reload or another sign-in.
+document.getElementById("retryEntryButton")?.addEventListener("click", () => {
+    window.dispatchEvent(new Event("hc-retry-entry"));
+});

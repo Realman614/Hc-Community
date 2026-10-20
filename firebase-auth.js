@@ -107,7 +107,7 @@ function friendlyAuthError(error) {
         "auth/weak-password": "Use a stronger password with at least 6 characters.",
         "auth/too-many-requests": "Too many attempts. Please wait a little and try again.",
         "auth/network-request-failed": "Network error. Check your internet connection and try again.",
-        "permission-denied": "Firestore blocked this request. Check that the HC-Community Firestore rules are published.",
+        "permission-denied": "Your account does not have permission for this action. Try signing in again or contact the site administrator.",
         "failed-precondition": "Firestore needs an additional setup step before this action can run."
     };
 
@@ -222,7 +222,10 @@ async function enterAuthenticatedApp(user, profile) {
     profileModal?.classList.add("hidden");
     updateAccountUI(user, profile);
     window.dispatchEvent(new CustomEvent("hc-authenticated", {
-        detail: { email: user.email, uid: user.uid, profile }
+        detail: {
+            email: user.email, uid: user.uid, profile,
+            onFailure: () => { appEnteredForCurrentSession = false; }
+        }
     }));
 }
 
@@ -448,7 +451,7 @@ profileForm?.addEventListener("submit", async event => {
     } catch (error) {
         console.error("Profile creation failed:", error);
         const message = error?.code === "permission-denied"
-            ? "Profile could not be created. Publish the new Firestore rules first, then try again."
+            ? "Profile could not be created. The username may have just been taken, or your account may not have permission. Try another username or contact the site administrator."
             : friendlyAuthError(error);
         showMessage(profileMessage, message);
     } finally {
@@ -604,6 +607,13 @@ async function leaveCommunityInFirestore(communityId) {
 
 async function createCommunityInFirestore(input) {
     const user = requireVerifiedUser();
+    const count = value => Array.from(String(value || "")).length;
+    if (count(input.name) < 2 || count(input.name) > 30
+        || count(input.icon) < 1 || count(input.icon) > 8
+        || count(input.description) < 1 || count(input.description) > 180
+        || !["SPORTS", "ACADEMIC", "TECHNOLOGY", "CREATIVE", "OTHER"].includes(input.category)) {
+        throw new Error("Use a community name of 2–30 characters, an icon of 1–8 characters, and a description of 1–180 characters.");
+    }
     const communityRef = doc(collection(db, "communities"));
     const communityId = communityRef.id;
     const statsRef = doc(db, "communityStats", communityId);
@@ -820,6 +830,12 @@ window.HCFirebaseData = {
 };
 
 window.dispatchEvent(new Event("hc-firebase-ready"));
+
+window.addEventListener("hc-retry-entry", async () => {
+    const user = auth.currentUser;
+    if (user?.emailVerified) await continueAfterVerification(user);
+    else openAuth("login");
+});
 
 onAuthStateChanged(auth, async user => {
     appEnteredForCurrentSession = false;

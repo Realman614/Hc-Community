@@ -1426,7 +1426,7 @@
                 <span>Community name</span>
 
                 <input
-                    id="newCommunityName"
+                    id="newCommunityName" minlength="2"
                     type="text"
                     maxlength="30"
                     placeholder="e.g. Robotics"
@@ -1531,6 +1531,8 @@
 
             <div class="settings-profile-summary">
                 <span>Profile</span>
+                <span id="settingsAccountEmail"></span>
+                <small id="settingsVerificationStatus"></small>
                 <strong id="settingsProfileName">Loading profile…</strong>
                 <small id="settingsProfileUsername"></small>
                 <span class="developer-badge hidden" id="settingsDeveloperBadge">DEVELOPER</span>
@@ -1743,6 +1745,10 @@
 </div>
 
 
+<aside id="entryStatus" class="entry-status hidden" aria-label="Loading account">
+    <p id="entryMessage" role="status" aria-live="polite"></p>
+    <button id="retryEntryButton" class="primary-app-btn" type="button">Try again</button>
+</aside>
 <script src="app.js"></script>
 <script type="module" src="firebase-auth.js"></script>
 
