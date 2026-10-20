@@ -1,0 +1,4 @@
+HC-Community full project with favicon integration
+
+Open index.html. Favicon links are already configured. Keep favicon assets in the same folder as index.html.
+Included app files: index.html, style.css, app.js, firebase-auth.js, about.html.

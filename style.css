@@ -1,0 +1,7485 @@
+/* =========================================================
+   HC-COMMUNITY
+   PRE-1.0.0
+========================================================= */
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #080a10;
+    --bg-deep: #05070d;
+    --surface: #10131c;
+    --surface-2: #151823;
+    --surface-3: #1a1d29;
+
+    --border: rgba(255, 255, 255, 0.075);
+    --border-bright: rgba(132, 124, 255, 0.28);
+
+    --text: #f4f5fb;
+    --muted: #8a8fa0;
+    --muted-2: #656a7a;
+
+    --purple: #746bff;
+    --purple-light: #9a94ff;
+    --blue: #718dff;
+
+    --danger: #ff7784;
+
+    --rail-width: 76px;
+    --sidebar-width: 260px;
+}
+
+html {
+    scroll-behavior: auto;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background: var(--bg);
+    color: var(--text);
+
+    overflow-x: hidden;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    color: inherit;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--purple);
+    outline-offset: 2px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+.welcome-experience {
+    position: relative;
+
+    background: var(--bg-deep);
+}
+
+
+/* =========================================================
+   WELCOME PROGRESS
+========================================================= */
+
+.scroll-progress {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    z-index: 1000;
+
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.scroll-progress-bar {
+    width: 0;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #596fff,
+            #a76cff
+        );
+
+    box-shadow:
+        0 0 20px rgba(104, 91, 255, 0.65);
+}
+
+
+/* =========================================================
+   WELCOME NAV
+========================================================= */
+
+.welcome-nav {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 22px 30px;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.35s ease;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    color: rgba(231, 234, 255, 0.7);
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.nav-logo {
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 13px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #625cff,
+            #895eff
+        );
+
+    box-shadow:
+        0 0 30px rgba(104, 91, 255, 0.3);
+
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.welcome-nav-status {
+    color: rgba(205, 210, 240, 0.35);
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 2.2px;
+}
+
+
+/* =========================================================
+   GENERIC WELCOME SCENE
+========================================================= */
+
+.scroll-scene {
+    position: relative;
+}
+
+.sticky-stage {
+    position: sticky;
+
+    top: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scene-grid {
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(110, 119, 255, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(110, 119, 255, 0.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 60px 60px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            transparent,
+            black 18%,
+            black 82%,
+            transparent
+        );
+
+    pointer-events: none;
+}
+
+.scene-number {
+    position: absolute;
+
+    left: 30px;
+    top: 50%;
+
+    z-index: 10;
+
+    transform:
+        translateY(-50%)
+        rotate(-90deg);
+
+    color: rgba(158, 165, 205, 0.2);
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 5px;
+}
+
+.scene-eyebrow,
+.page-eyebrow {
+    color: var(--purple-light);
+
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2.7px;
+}
+
+.scene-eyebrow {
+    margin-bottom: 22px;
+}
+
+.scene-description {
+    max-width: 600px;
+
+    margin:
+        28px auto 0;
+
+    color: rgba(215, 220, 245, 0.5);
+
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.glow {
+    position: absolute;
+
+    border-radius: 50%;
+
+    filter: blur(110px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.scene-intro {
+    height: 230vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(83, 92, 255, 0.13),
+            transparent 34%
+        ),
+        var(--bg-deep);
+}
+
+.glow-a {
+    width: 480px;
+    height: 480px;
+
+    left: 4%;
+    top: 12%;
+
+    background: rgba(55, 83, 255, 0.11);
+}
+
+.glow-b {
+    width: 500px;
+    height: 500px;
+
+    right: 0;
+    bottom: 4%;
+
+    background: rgba(143, 68, 255, 0.09);
+}
+
+.intro-content {
+    position: relative;
+
+    z-index: 5;
+
+    text-align: center;
+}
+
+.intro-small-text {
+    margin-bottom: 25px;
+
+    color: #8398ff;
+
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 4px;
+}
+
+.hero-title {
+    display: flex;
+    justify-content: center;
+    gap: 19px;
+
+    font-size:
+        clamp(4rem, 10vw, 9rem);
+
+    line-height: 0.88;
+    letter-spacing: -7px;
+
+    will-change:
+        transform,
+        opacity,
+        filter;
+}
+
+.hero-title > span {
+    color: #fff;
+}
+
+.hero-title strong {
+    color: #8193ff;
+
+    font-weight: 800;
+}
+
+.hero-description {
+    margin-top: 34px;
+
+    color: rgba(222, 226, 248, 0.56);
+
+    font-size: 19px;
+    line-height: 1.55;
+
+    will-change:
+        transform,
+        opacity;
+}
+
+
+/* =========================================================
+   INTRO ORBITS
+========================================================= */
+
+.community-orbit {
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 4;
+}
+
+.orbit-item {
+    position: absolute;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 9px 14px 9px 9px;
+
+    border: 1px solid rgba(125, 140, 255, 0.16);
+    border-radius: 999px;
+
+    color: rgba(225, 229, 249, 0.68);
+
+    background: rgba(16, 20, 39, 0.72);
+
+    backdrop-filter: blur(16px);
+
+    box-shadow:
+        0 16px 50px rgba(0, 0, 0, 0.28);
+
+    font-size: 12px;
+
+    will-change:
+        transform,
+        opacity;
+}
+
+.orbit-item span {
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: rgba(104, 118, 255, 0.1);
+
+    font-size: 18px;
+}
+
+.orbit-one {
+    left: 11%;
+    top: 26%;
+}
+
+.orbit-two {
+    right: 12%;
+    top: 27%;
+}
+
+.orbit-three {
+    left: 18%;
+    bottom: 22%;
+}
+
+.orbit-four {
+    right: 18%;
+    bottom: 21%;
+}
+
+.orbit-five {
+    left: 50%;
+    top: 16%;
+
+    transform: translateX(-50%);
+}
+
+
+/* =========================================================
+   SCROLL HINT
+========================================================= */
+
+.scroll-hint {
+    position: absolute;
+
+    left: 50%;
+    bottom: 31px;
+
+    z-index: 10;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    color: rgba(207, 213, 244, 0.34);
+
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.scroll-mouse {
+    position: relative;
+
+    width: 21px;
+    height: 34px;
+
+    border: 1px solid rgba(213, 218, 247, 0.2);
+    border-radius: 999px;
+}
+
+.scroll-wheel {
+    position: absolute;
+
+    top: 7px;
+    left: 50%;
+
+    width: 3px;
+    height: 6px;
+
+    border-radius: 999px;
+
+    background: rgba(221, 225, 248, 0.65);
+
+    animation:
+        scrollWheel 1.6s ease infinite;
+}
+
+@keyframes scrollWheel {
+    0% {
+        opacity: 0;
+
+        transform:
+            translate(-50%, 0);
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate(-50%, 10px);
+    }
+}
+
+
+/* =========================================================
+   COMMUNITIES SCENE
+========================================================= */
+
+.scene-communities {
+    height: 250vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(79, 72, 210, 0.11),
+            transparent 38%
+        ),
+        #070912;
+}
+
+.community-copy {
+    position: relative;
+
+    z-index: 5;
+
+    width: min(1000px, 88%);
+
+    text-align: center;
+}
+
+.community-copy h2 {
+    font-size:
+        clamp(3rem, 7vw, 7rem);
+
+    line-height: 0.95;
+    letter-spacing: -5px;
+}
+
+.reveal-line {
+    display: block;
+
+    opacity: 0;
+
+    transform: translateY(70px);
+
+    will-change:
+        transform,
+        opacity,
+        filter;
+}
+
+.reveal-line:first-child {
+    color: rgba(255, 255, 255, 0.42);
+}
+
+.reveal-line.accent {
+    color: #8495ff;
+}
+
+
+/* =========================================================
+   FLOATING WELCOME COMMUNITY CARDS
+========================================================= */
+
+.floating-community-card {
+    position: absolute;
+
+    z-index: 6;
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    min-width: 225px;
+
+    padding: 13px 17px;
+
+    border: 1px solid rgba(121, 133, 255, 0.16);
+    border-radius: 17px;
+
+    background: rgba(16, 20, 39, 0.74);
+
+    backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.26);
+
+    opacity: 0;
+}
+
+.floating-card-icon {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 13px;
+
+    background: rgba(105, 113, 255, 0.1);
+
+    font-size: 23px;
+}
+
+.floating-community-card strong,
+.floating-community-card span {
+    display: block;
+}
+
+.floating-community-card strong {
+    margin-bottom: 4px;
+
+    font-size: 13px;
+}
+
+.floating-community-card span {
+    color: rgba(211, 216, 240, 0.4);
+
+    font-size: 10px;
+}
+
+.floating-card-a {
+    left: 7%;
+    top: 18%;
+}
+
+.floating-card-b {
+    right: 7%;
+    top: 20%;
+}
+
+.floating-card-c {
+    left: 50%;
+    bottom: 12%;
+
+    transform: translateX(-50%);
+}
+
+
+/* =========================================================
+   CHANNEL SCENE
+========================================================= */
+
+.scene-channels {
+    height: 270vh;
+
+    background:
+        linear-gradient(
+            180deg,
+            #070912,
+            #090b14
+        );
+}
+
+.scene-channels .sticky-stage {
+    gap: 7vw;
+
+    padding: 0 8%;
+}
+
+.channels-demo {
+    width: min(650px, 55vw);
+    height: 440px;
+
+    display: grid;
+    grid-template-columns: 190px 1fr;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 23px;
+
+    background: #0c0f17;
+
+    box-shadow:
+        0 40px 100px rgba(0, 0, 0, 0.4);
+
+    opacity: 0;
+
+    transform:
+        translateX(-100px)
+        scale(0.92);
+}
+
+.demo-sidebar {
+    padding: 17px 12px;
+
+    background: #10131c;
+
+    border-right: 1px solid var(--border);
+}
+
+.demo-community-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 25px;
+
+    padding: 4px 5px 16px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.demo-community-title > span {
+    width: 39px;
+    height: 39px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+
+    background: #1a1d29;
+}
+
+.demo-community-title small,
+.demo-community-title strong {
+    display: block;
+}
+
+.demo-community-title small {
+    margin-bottom: 3px;
+
+    color: var(--muted-2);
+
+    font-size: 7px;
+    letter-spacing: 1.3px;
+}
+
+.demo-community-title strong {
+    font-size: 12px;
+}
+
+.demo-sidebar > p {
+    margin:
+        0 8px 9px;
+
+    color: var(--muted-2);
+
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+}
+
+.demo-channel {
+    padding: 9px 10px;
+
+    margin-bottom: 3px;
+
+    border-radius: 7px;
+
+    color: #777d90;
+
+    font-size: 11px;
+}
+
+.demo-channel.active {
+    color: #fff;
+
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.demo-conversation {
+    padding: 23px;
+}
+
+.demo-conversation-header {
+    padding-bottom: 16px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.demo-conversation-header strong,
+.demo-conversation-header span {
+    display: block;
+}
+
+.demo-conversation-header strong {
+    margin-bottom: 3px;
+
+    font-size: 14px;
+}
+
+.demo-conversation-header span {
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+.demo-message {
+    display: flex;
+    gap: 11px;
+
+    margin-top: 24px;
+
+    opacity: 0;
+
+    transform: translateY(30px);
+}
+
+.demo-avatar {
+    width: 35px;
+    height: 35px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    color: #aaa5ff;
+
+    background: rgba(113, 105, 255, 0.13);
+
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.demo-message strong,
+.demo-message small {
+    display: inline-block;
+}
+
+.demo-message strong {
+    margin-right: 7px;
+
+    font-size: 11px;
+}
+
+.demo-message small {
+    color: #5f6474;
+
+    font-size: 8px;
+}
+
+.demo-message p {
+    margin-top: 6px;
+
+    color: #a3a7b5;
+
+    font-size: 10px;
+    line-height: 1.55;
+}
+
+.channels-copy {
+    width: min(430px, 34vw);
+
+    opacity: 0;
+
+    transform: translateX(80px);
+}
+
+.channels-copy h2,
+.posts-copy h2,
+.events-copy h2,
+.discover-copy h2 {
+    font-size:
+        clamp(3rem, 5.5vw, 6rem);
+
+    line-height: 0.94;
+    letter-spacing: -4px;
+}
+
+.channels-copy h2 span,
+.posts-copy h2 span,
+.events-copy h2 span,
+.discover-copy h2 span {
+    color: #8293ff;
+}
+
+.channels-copy > p:last-child,
+.posts-copy > p:last-child,
+.events-copy > p:last-child,
+.discover-copy > p:last-child {
+    margin-top: 25px;
+
+    color: rgba(211, 216, 240, 0.48);
+
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   POSTS WELCOME SCENE
+========================================================= */
+
+.scene-posts {
+    height: 270vh;
+
+    background:
+        radial-gradient(
+            circle at 75% 50%,
+            rgba(91, 76, 225, 0.11),
+            transparent 35%
+        ),
+        #070912;
+}
+
+.scene-posts .sticky-stage {
+    justify-content: space-between;
+
+    padding: 0 9%;
+}
+
+.posts-copy {
+    width: 38%;
+
+    opacity: 0;
+
+    transform: translateX(-80px);
+}
+
+.welcome-post-stack {
+    position: relative;
+
+    width: min(530px, 45vw);
+    height: 480px;
+}
+
+.welcome-post-card {
+    position: absolute;
+
+    width: 100%;
+
+    padding: 21px;
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    background: rgba(17, 20, 30, 0.9);
+
+    box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.3);
+
+    opacity: 0;
+
+    transform:
+        translateY(100px)
+        scale(0.94);
+}
+
+.welcome-post-one {
+    top: 0;
+}
+
+.welcome-post-two {
+    top: 145px;
+}
+
+.welcome-post-three {
+    top: 290px;
+}
+
+.welcome-post-author {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.welcome-post-author strong,
+.welcome-post-author span {
+    display: block;
+}
+
+.welcome-post-author strong {
+    font-size: 12px;
+}
+
+.welcome-post-author span {
+    margin-top: 3px;
+
+    color: #777d8f;
+
+    font-size: 9px;
+}
+
+.welcome-post-card > p {
+    margin:
+        14px 0;
+
+    color: #b0b4c2;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.welcome-post-actions {
+    display: flex;
+    gap: 17px;
+
+    color: #656b7d;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   EVENTS WELCOME SCENE
+========================================================= */
+
+.scene-events {
+    height: 260vh;
+
+    background:
+        linear-gradient(
+            180deg,
+            #070912,
+            #090b14
+        );
+}
+
+.scene-events .sticky-stage {
+    justify-content: space-between;
+
+    padding: 0 9%;
+}
+
+.events-copy {
+    width: 40%;
+
+    opacity: 0;
+}
+
+.welcome-event-stack {
+    width: min(520px, 45vw);
+}
+
+.welcome-event-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    margin-bottom: 13px;
+
+    padding: 20px;
+
+    border: 1px solid var(--border);
+    border-radius: 17px;
+
+    background: #11141e;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.24);
+
+    opacity: 0;
+
+    transform: translateX(100px);
+}
+
+.welcome-event-date {
+    width: 56px;
+    height: 59px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    color: #9a94ff;
+
+    background: rgba(113, 105, 255, 0.1);
+}
+
+.welcome-event-date strong {
+    color: #f3f4fb;
+
+    font-size: 18px;
+}
+
+.welcome-event-date span {
+    margin-top: 2px;
+
+    font-size: 8px;
+    font-weight: 900;
+}
+
+.welcome-event-card small {
+    color: #7d77ff;
+
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+}
+
+.welcome-event-card h3 {
+    margin:
+        5px 0 4px;
+
+    font-size: 13px;
+}
+
+.welcome-event-card p {
+    color: #74798a;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   DISCOVER WELCOME SCENE
+========================================================= */
+
+.scene-discover {
+    height: 260vh;
+
+    background:
+        radial-gradient(
+            circle at 25% 50%,
+            rgba(79, 90, 230, 0.11),
+            transparent 35%
+        ),
+        #070912;
+}
+
+.scene-discover .sticky-stage {
+    gap: 8vw;
+
+    padding: 0 8%;
+}
+
+.discover-demo {
+    width: min(590px, 52vw);
+
+    padding: 20px;
+
+    border: 1px solid var(--border);
+    border-radius: 23px;
+
+    background: rgba(14, 17, 26, 0.94);
+
+    box-shadow:
+        0 35px 90px rgba(0, 0, 0, 0.35);
+
+    opacity: 0;
+
+    transform:
+        translateX(-90px)
+        scale(0.94);
+}
+
+.discover-demo-search {
+    margin-bottom: 16px;
+
+    padding: 13px 15px;
+
+    border: 1px solid var(--border);
+    border-radius: 11px;
+
+    color: #646a7c;
+
+    background: #0b0e15;
+
+    font-size: 11px;
+}
+
+.discover-demo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.discover-demo-grid > div {
+    min-height: 115px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    padding: 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: #12151f;
+}
+
+.discover-demo-grid span {
+    margin-bottom: auto;
+
+    font-size: 24px;
+}
+
+.discover-demo-grid strong {
+    font-size: 11px;
+}
+
+.discover-demo-grid small {
+    margin-top: 4px;
+
+    color: #6d68df;
+
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.discover-copy {
+    width: min(420px, 34vw);
+
+    opacity: 0;
+
+    transform: translateX(80px);
+}
+
+
+/* =========================================================
+   FINAL WELCOME
+========================================================= */
+
+.scene-final {
+    height: 190vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(82, 91, 240, 0.18),
+            transparent 35%
+        ),
+        var(--bg-deep);
+}
+
+.final-glow {
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    border-radius: 50%;
+
+    background: rgba(84, 94, 255, 0.09);
+
+    filter: blur(120px);
+}
+
+.final-content {
+    position: relative;
+
+    z-index: 5;
+
+    width: min(660px, 90%);
+
+    text-align: center;
+
+    opacity: 0;
+
+    transform:
+        translateY(70px)
+        scale(0.94);
+}
+
+.final-logo {
+    width: 67px;
+    height: 67px;
+
+    display: grid;
+    place-items: center;
+
+    margin:
+        0 auto 26px;
+
+    border-radius: 19px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #625cff,
+            #895eff
+        );
+
+    box-shadow:
+        0 0 45px rgba(104, 91, 255, 0.34);
+
+    font-weight: 900;
+}
+
+.final-content h2 {
+    margin-bottom: 25px;
+
+    font-size:
+        clamp(3.5rem, 7vw, 7rem);
+
+    line-height: 0.92;
+    letter-spacing: -5px;
+}
+
+.final-content h2 span {
+    color: #8495ff;
+}
+
+.final-content > p:not(.scene-eyebrow) {
+    max-width: 520px;
+
+    margin:
+        0 auto 31px;
+
+    color: rgba(213, 218, 242, 0.5);
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.auth-buttons {
+    width: min(360px, 100%);
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    margin: auto;
+}
+
+.google-btn,
+.email-btn {
+    width: 100%;
+
+    padding: 14px 17px;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.google-btn {
+    position: relative;
+
+    border: 0;
+
+    color: #151720;
+
+    background: #fff;
+}
+
+.google-btn span {
+    position: absolute;
+
+    left: 18px;
+
+    font-weight: 900;
+}
+
+.email-btn {
+    border: 1px solid rgba(134, 145, 255, 0.2);
+
+    color: #e8eaff;
+
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.google-btn:hover,
+.email-btn:hover {
+    transform: translateY(-2px);
+}
+
+.email-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.learn-more-btn {
+    margin-top: 21px;
+
+    border: 0;
+
+    color: rgba(201, 207, 237, 0.4);
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 10px;
+}
+
+.learn-more-btn:hover {
+    color: #9d9aff;
+}
+
+.prototype-note {
+    display: block;
+
+    margin-top: 18px;
+
+    color: rgba(194, 199, 224, 0.24);
+
+    font-size: 8px;
+}
+
+
+/* =========================================================
+   MAIN APP
+========================================================= */
+
+.main-app {
+    position: relative;
+
+    min-height: 100vh;
+
+    display: grid;
+    grid-template-columns:
+        var(--rail-width)
+        var(--sidebar-width)
+        minmax(0, 1fr);
+
+    background:
+        radial-gradient(
+            circle at 80% 8%,
+            rgba(95, 80, 255, 0.09),
+            transparent 27%
+        ),
+        var(--bg);
+
+    opacity: 0;
+
+    transform: scale(0.985);
+
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
+}
+
+.main-app.show {
+    opacity: 1;
+
+    transform: scale(1);
+}
+
+
+/* =========================================================
+   COMMUNITY RAIL
+========================================================= */
+
+.community-rail {
+    position: sticky;
+
+    top: 0;
+
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 11px;
+
+    padding: 17px 0;
+
+    overflow-y: auto;
+
+    background: #07080d;
+
+    border-right: 1px solid var(--border);
+}
+
+.rail-logo,
+.rail-button,
+.community-rail-icon {
+    position: relative;
+
+    width: 47px;
+    height: 47px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border: 0;
+    border-radius: 15px;
+
+    color: white;
+
+    background: #171923;
+
+    cursor: pointer;
+
+    transition:
+        border-radius 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.rail-logo {
+    background:
+        linear-gradient(
+            135deg,
+            #625cff,
+            #895eff
+        );
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.rail-logo.active::before,
+.community-rail-icon.active::before {
+    content: "";
+
+    position: absolute;
+
+    left: -15px;
+
+    width: 4px;
+    height: 28px;
+
+    border-radius: 0 4px 4px 0;
+
+    background: #fff;
+}
+
+.rail-button {
+    color: #918aff;
+
+    font-size: 24px;
+}
+
+.create-rail-button {
+    font-size: 17px;
+}
+
+.rail-button:hover,
+.community-rail-icon:hover,
+.community-rail-icon.active {
+    border-radius: 12px;
+
+    background: var(--purple);
+
+    transform: translateY(-1px);
+}
+
+.rail-divider {
+    width: 30px;
+    height: 1px;
+
+    flex-shrink: 0;
+
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.joined-community-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.community-rail-icon {
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   APP SIDEBAR
+========================================================= */
+
+.app-sidebar {
+    position: sticky;
+
+    top: 0;
+
+    height: 100vh;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    background: rgba(13, 15, 23, 0.98);
+
+    border-right: 1px solid var(--border);
+}
+
+.sidebar-view {
+    display: none;
+
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+}
+
+.sidebar-view.active {
+    display: block;
+}
+
+.sidebar-brand,
+.community-sidebar-header {
+    min-height: 73px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 13px 18px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebar-brand small,
+.community-sidebar-header small {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #606576;
+
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+}
+
+.sidebar-brand h2,
+.community-sidebar-header h2 {
+    font-size: 15px;
+}
+
+.sidebar-nav {
+    padding: 17px 11px 7px;
+}
+
+.sidebar-link,
+.sidebar-secondary-link,
+.channel-link {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 10px 11px;
+
+    margin-bottom: 3px;
+
+    border: 0;
+    border-radius: 8px;
+
+    color: #858a9c;
+
+    background: transparent;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active,
+.sidebar-secondary-link:hover,
+.channel-link:hover,
+.channel-link.active {
+    color: #f3f4fa;
+
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.sidebar-link > span:first-child,
+.sidebar-secondary-link > span:first-child {
+    width: 20px;
+
+    color: #707587;
+
+    text-align: center;
+
+    font-size: 17px;
+}
+
+.sidebar-section {
+    padding: 16px 17px 4px;
+}
+
+.sidebar-label {
+    margin-bottom: 10px;
+
+    color: #5e6374;
+
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+}
+
+.sidebar-badge {
+    margin-left: auto;
+
+    min-width: 19px;
+
+    padding: 2px 6px;
+
+    border-radius: 999px;
+
+    color: white;
+
+    background: #6e66ff;
+
+    text-align: center;
+
+    font-size: 8px;
+    font-weight: 900;
+}
+
+.sidebar-tip {
+    margin: 20px 17px;
+
+    padding: 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 11px;
+
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.sidebar-tip strong {
+    color: #aaa5ff;
+
+    font-size: 10px;
+}
+
+.sidebar-tip p {
+    margin-top: 5px;
+
+    color: #696f80;
+
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   COMMUNITY SIDEBAR
+========================================================= */
+
+.community-sidebar-header {
+    gap: 11px;
+}
+
+.sidebar-community-icon {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+
+    background: #191c27;
+
+    font-size: 20px;
+}
+
+.channel-section {
+    padding-top: 20px;
+}
+
+.channel-link span {
+    color: #646a7c;
+
+    font-size: 17px;
+}
+
+.leave-button {
+    margin-top: 6px;
+
+    color: #777c8d;
+}
+
+.leave-button:hover {
+    color: #ff8792;
+
+    background: rgba(255, 90, 105, 0.07);
+}
+
+
+/* =========================================================
+   USER AREA
+========================================================= */
+
+.sidebar-user {
+    min-height: 66px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 10px 13px;
+
+    border-top: 1px solid var(--border);
+
+    background: #0b0d14;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    color: #b1adff;
+
+    background: rgba(111, 102, 255, 0.14);
+
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.sidebar-user-info {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.sidebar-user-info strong,
+.sidebar-user-info span {
+    display: block;
+}
+
+.sidebar-user-info strong {
+    font-size: 11px;
+}
+
+.sidebar-user-info span {
+    margin-top: 2px;
+
+    color: #626879;
+
+    font-size: 8px;
+}
+
+.sidebar-user button {
+    width: 31px;
+    height: 31px;
+
+    border: 0;
+    border-radius: 8px;
+
+    color: #777d8e;
+
+    background: transparent;
+
+    cursor: pointer;
+}
+
+.sidebar-user button:hover {
+    color: white;
+
+    background: rgba(255, 255, 255, 0.06);
+}
+
+
+/* =========================================================
+   APP CONTENT
+========================================================= */
+
+.app-content {
+    min-width: 0;
+
+    min-height: 100vh;
+}
+
+.app-page {
+    display: none;
+
+    width: 100%;
+
+    padding:
+        48px
+        clamp(25px, 5vw, 75px)
+        80px;
+}
+
+.app-page.active {
+    display: block;
+
+    animation:
+        pageEnter 0.25s ease;
+}
+
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+}
+
+.page-header {
+    max-width: 1100px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+
+    margin:
+        0 auto 34px;
+}
+
+.page-header h1,
+.community-page-header h1 {
+    margin-top: 5px;
+
+    font-size:
+        clamp(32px, 5vw, 53px);
+
+    line-height: 1;
+    letter-spacing: -2.5px;
+}
+
+.page-subtitle {
+    margin-top: 10px;
+
+    color: #777d8e;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.primary-app-btn {
+    border: 0;
+    border-radius: 9px;
+
+    padding: 11px 16px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #625cff,
+            #8068ff
+        );
+
+    cursor: pointer;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.primary-app-btn:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 10px 30px rgba(100, 91, 255, 0.2);
+}
+
+.secondary-app-btn {
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    padding: 10px 14px;
+
+    color: #aaaebe;
+
+    background: #141720;
+
+    cursor: pointer;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.secondary-app-btn:hover {
+    color: white;
+
+    border-color: var(--border-bright);
+}
+
+
+/* =========================================================
+   HOME
+========================================================= */
+
+.home-empty-state {
+    max-width: 650px;
+
+    min-height: 60vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin: auto;
+
+    text-align: center;
+}
+
+.home-empty-icon {
+    width: 80px;
+    height: 80px;
+
+    display: grid;
+    place-items: center;
+
+    margin-bottom: 21px;
+
+    border: 1px solid rgba(126, 117, 255, 0.22);
+    border-radius: 22px;
+
+    color: #8982ff;
+
+    background: rgba(111, 101, 255, 0.1);
+
+    font-size: 35px;
+}
+
+.home-empty-state h2 {
+    margin-bottom: 10px;
+
+    font-size: 30px;
+    letter-spacing: -1px;
+}
+
+.home-empty-state p {
+    max-width: 470px;
+
+    margin-bottom: 22px;
+
+    color: #7d8293;
+
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.home-feed {
+    max-width: 820px;
+
+    margin: auto;
+}
+
+.home-feed-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 17px;
+}
+
+.home-feed-heading h2 {
+    font-size: 17px;
+}
+
+.home-feed-heading span {
+    color: #656a7b;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   DISCOVER
+========================================================= */
+
+.discover-toolbar {
+    max-width: 1100px;
+
+    margin:
+        0 auto 28px;
+}
+
+.discover-search {
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    padding: 0 15px;
+
+    margin-bottom: 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: #10131c;
+}
+
+.discover-search span {
+    color: #74798b;
+
+    font-size: 19px;
+}
+
+.discover-search input {
+    width: 100%;
+
+    border: 0;
+    outline: 0;
+
+    color: white;
+
+    background: transparent;
+
+    font-size: 13px;
+}
+
+.discover-search input::placeholder {
+    color: #5e6475;
+}
+
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.category-filter {
+    padding: 8px 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    color: #777d8e;
+
+    background: #10131c;
+
+    cursor: pointer;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.category-filter:hover,
+.category-filter.active {
+    color: #fff;
+
+    border-color: rgba(125, 117, 255, 0.3);
+
+    background: rgba(110, 101, 255, 0.13);
+}
+
+.community-grid {
+    max-width: 1100px;
+
+    display: grid;
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(230px, 1fr)
+        );
+
+    gap: 16px;
+
+    margin: auto;
+}
+
+.community-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    min-height: 260px;
+
+    padding: 20px;
+
+    border: 1px solid var(--border);
+    border-radius: 15px;
+
+    background: #11141d;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.community-card:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(128, 119, 255, 0.28);
+}
+
+.community-card-icon {
+    width: 49px;
+    height: 49px;
+
+    display: grid;
+    place-items: center;
+
+    margin-bottom: 16px;
+
+    border-radius: 14px;
+
+    background: #191c27;
+
+    font-size: 25px;
+}
+
+.community-card h3 {
+    margin-bottom: 6px;
+
+    font-size: 16px;
+}
+
+.community-card-description {
+    color: #777d8d;
+
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+.community-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin:
+        auto 0 13px;
+    padding-top: 16px;
+
+    color: #666b7b;
+
+    font-size: 8px;
+}
+
+.community-card-category {
+    color: #817aff;
+
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.join-community-btn {
+    width: 100%;
+
+    padding: 9px;
+
+    border: 0;
+    border-radius: 8px;
+
+    color: #9a94ff;
+
+    background: rgba(111, 101, 255, 0.11);
+
+    cursor: pointer;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.join-community-btn:hover {
+    color: white;
+
+    background: #665eff;
+}
+
+.join-community-btn.joined {
+    color: #8b909f;
+
+    background: rgba(255, 255, 255, 0.055);
+}
+
+
+/* =========================================================
+   COMMUNITY PAGE
+========================================================= */
+
+.community-page-header {
+    max-width: 900px;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    margin:
+        10px auto 32px;
+}
+
+.community-page-icon {
+    width: 72px;
+    height: 72px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 20px;
+
+    background: #161923;
+
+    font-size: 34px;
+}
+
+.community-page-title > p:not(.page-eyebrow) {
+    margin-top: 7px;
+
+    color: #7e8495;
+
+    font-size: 12px;
+}
+
+.community-meta {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-top: 9px;
+
+    color: #5f6576;
+
+    font-size: 9px;
+}
+
+.community-view {
+    display: none;
+
+    max-width: 900px;
+
+    margin: auto;
+}
+
+.community-view.active {
+    display: block;
+}
+
+
+/* =========================================================
+   CHANNEL HEADER
+========================================================= */
+
+.channel-header {
+    margin-bottom: 15px;
+
+    padding-bottom: 17px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.channel-header h2 {
+    font-size: 18px;
+}
+
+.channel-header p {
+    margin-top: 5px;
+
+    color: #747a8b;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   POST COMPOSER
+========================================================= */
+
+.post-composer {
+    display: flex;
+    gap: 12px;
+
+    margin-bottom: 19px;
+
+    padding: 17px;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: #10131c;
+}
+
+.composer-avatar {
+    width: 37px;
+    height: 37px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    color: #aaa5ff;
+
+    background: rgba(111, 102, 255, 0.13);
+
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.composer-main {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.composer-main textarea {
+    width: 100%;
+    min-height: 76px;
+
+    resize: vertical;
+
+    border: 0;
+    outline: 0;
+
+    color: #e7e8ee;
+
+    background: transparent;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.composer-main textarea::placeholder {
+    color: #5f6575;
+}
+
+.composer-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding-top: 11px;
+
+    border-top: 1px solid var(--border);
+}
+
+.composer-footer > span {
+    color: #626879;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   POSTS
+========================================================= */
+
+.post-feed {
+    display: grid;
+    gap: 12px;
+}
+
+.post-card {
+    padding: 18px;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: #10131c;
+
+    animation:
+        postEnter 0.25s ease;
+}
+
+@keyframes postEnter {
+    from {
+        opacity: 0;
+
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+}
+
+.post-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.post-avatar {
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    color: #aaa5ff;
+
+    background: rgba(111, 102, 255, 0.12);
+
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.post-author-info {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.post-author-info strong {
+    display: block;
+
+    font-size: 11px;
+}
+
+.post-author-info span {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #626879;
+
+    font-size: 8px;
+}
+
+.post-community-chip {
+    padding: 5px 8px;
+
+    border-radius: 999px;
+
+    color: #8e88ff;
+
+    background: rgba(111, 101, 255, 0.09);
+
+    font-size: 8px;
+    font-weight: 800;
+}
+
+.post-body {
+    margin:
+        14px 0;
+
+    color: #b5b8c5;
+
+    white-space: pre-wrap;
+
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+.post-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.post-action-button {
+    padding: 6px 9px;
+
+    border: 1px solid transparent;
+    border-radius: 7px;
+
+    color: #73798b;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 9px;
+}
+
+.post-action-button:hover,
+.post-action-button.liked {
+    color: #b2adff;
+
+    border-color: rgba(123, 114, 255, 0.14);
+
+    background: rgba(111, 101, 255, 0.07);
+}
+
+.post-delete-button {
+    margin-left: auto;
+
+    color: #656a7a;
+}
+
+.post-delete-button:hover {
+    color: #ff7d88;
+
+    background: rgba(255, 91, 104, 0.06);
+}
+
+.reply-section {
+    margin-top: 13px;
+
+    padding-top: 13px;
+
+    border-top: 1px solid var(--border);
+}
+
+.reply-list {
+    display: grid;
+    gap: 9px;
+}
+
+.reply-item {
+    padding: 10px 11px;
+
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.reply-item strong {
+    font-size: 9px;
+}
+
+.reply-item span {
+    margin-left: 6px;
+
+    color: #5f6575;
+
+    font-size: 7px;
+}
+
+.reply-item p {
+    margin-top: 5px;
+
+    color: #989dac;
+
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.reply-composer {
+    display: flex;
+    gap: 7px;
+
+    margin-top: 10px;
+}
+
+.reply-composer input {
+    min-width: 0;
+
+    flex: 1;
+
+    padding: 9px 10px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    outline: 0;
+
+    color: white;
+
+    background: #0c0f17;
+
+    font-size: 10px;
+}
+
+.reply-composer button {
+    padding: 8px 11px;
+
+    border: 0;
+    border-radius: 8px;
+
+    color: white;
+
+    background: #625cff;
+
+    cursor: pointer;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.empty-content-card {
+    padding: 35px 25px;
+
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+
+    color: #6d7282;
+
+    text-align: center;
+
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+.event-list {
+    max-width: 900px;
+
+    display: grid;
+    gap: 11px;
+
+    margin: auto;
+}
+
+.app-event-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 17px 19px;
+
+    border: 1px solid var(--border);
+    border-radius: 13px;
+
+    background: #10131c;
+}
+
+.app-event-date {
+    width: 54px;
+    height: 57px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    color: #9a94ff;
+
+    background: rgba(111, 101, 255, 0.1);
+}
+
+.app-event-date strong {
+    color: #f2f3f8;
+
+    font-size: 17px;
+}
+
+.app-event-date span {
+    font-size: 8px;
+    font-weight: 900;
+}
+
+.app-event-info {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.app-event-community {
+    color: #8079ff;
+
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.app-event-info h3 {
+    margin:
+        4px 0;
+
+    font-size: 13px;
+}
+
+.app-event-info p {
+    color: #74798a;
+
+    font-size: 10px;
+}
+
+.app-event-location {
+    color: #606677;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   ACTIVITY
+========================================================= */
+
+.activity-list {
+    max-width: 850px;
+
+    display: grid;
+    gap: 10px;
+
+    margin: auto;
+}
+
+.activity-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    padding: 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: #10131c;
+}
+
+.activity-icon {
+    width: 37px;
+    height: 37px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    color: #aaa5ff;
+
+    background: rgba(111, 102, 255, 0.11);
+}
+
+.activity-card strong {
+    font-size: 11px;
+}
+
+.activity-card p {
+    margin-top: 4px;
+
+    color: #777d8d;
+
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.activity-card small {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #575d6d;
+
+    font-size: 8px;
+}
+
+
+/* =========================================================
+   COMMUNITY ABOUT
+========================================================= */
+
+.section-heading {
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    margin:
+        5px 0 7px;
+
+    font-size: 28px;
+}
+
+.section-heading > div > p:last-child {
+    color: #777d8e;
+
+    font-size: 11px;
+}
+
+.community-about-card {
+    padding: 27px;
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    background: #10131c;
+}
+
+.community-about-card h2 {
+    margin:
+        6px 0 10px;
+
+    font-size: 28px;
+}
+
+.community-about-card > p:not(.page-eyebrow) {
+    max-width: 620px;
+
+    color: #828798;
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.community-about-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-top: 24px;
+}
+
+.community-about-grid > div {
+    padding: 17px;
+
+    border: 1px solid var(--border);
+    border-radius: 11px;
+
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.community-about-grid span,
+.community-about-grid strong {
+    display: block;
+}
+
+.community-about-grid span {
+    margin-bottom: 7px;
+
+    color: #616677;
+
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.community-about-grid strong {
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+
+    z-index: 2000;
+
+    display: grid;
+    place-items: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.7);
+
+    backdrop-filter: blur(8px);
+}
+
+.app-modal {
+    width: min(510px, 100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 23px;
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 18px;
+
+    background: #11141d;
+
+    box-shadow:
+        0 35px 100px rgba(0, 0, 0, 0.5);
+}
+
+.small-modal {
+    width: min(460px, 100%);
+}
+
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+}
+
+.modal-header h2 {
+    margin-top: 5px;
+
+    font-size: 23px;
+}
+
+.modal-close {
+    width: 33px;
+    height: 33px;
+
+    border: 0;
+    border-radius: 9px;
+
+    color: #818697;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    cursor: pointer;
+
+    font-size: 20px;
+}
+
+.modal-close:hover {
+    color: white;
+
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.form-field {
+    display: block;
+
+    margin-bottom: 15px;
+}
+
+.form-field > span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #8a8f9f;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+    width: 100%;
+
+    padding: 11px 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    outline: 0;
+
+    color: white;
+
+    background: #0b0e15;
+
+    font-size: 11px;
+}
+
+.form-field textarea {
+    min-height: 90px;
+
+    resize: vertical;
+}
+
+.form-field select {
+    cursor: pointer;
+}
+
+.modal-submit {
+    width: 100%;
+
+    margin-top: 5px;
+}
+
+.settings-content {
+    display: grid;
+    gap: 18px;
+}
+
+.settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 15px;
+
+    border: 1px solid var(--border);
+    border-radius: 11px;
+
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.settings-row strong {
+    font-size: 11px;
+}
+
+.settings-row p {
+    margin-top: 4px;
+
+    color: #6f7485;
+
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+.settings-row > span {
+    color: #9993ff;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.danger-outline-btn {
+    padding: 10px 13px;
+
+    border: 1px solid rgba(255, 104, 118, 0.22);
+    border-radius: 9px;
+
+    color: #ff818c;
+
+    background: rgba(255, 91, 105, 0.05);
+
+    cursor: pointer;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.danger-outline-btn:hover {
+    background: rgba(255, 91, 105, 0.1);
+}
+
+
+/* =========================================================
+   ABOUT PAGE
+========================================================= */
+
+.about-page {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(94, 83, 255, 0.13),
+            transparent 32%
+        ),
+        #080a10;
+}
+
+.about-nav {
+    max-width: 1120px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: auto;
+
+    padding: 23px 25px;
+}
+
+.about-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.about-logo {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #625cff,
+            #895eff
+        );
+
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.about-back-link {
+    border: 0;
+
+    color: #8c91a2;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 10px;
+}
+
+.about-back-link:hover {
+    color: white;
+}
+
+.about-hero {
+    max-width: 900px;
+
+    margin: auto;
+
+    padding:
+        100px 25px 90px;
+
+    text-align: center;
+}
+
+.about-hero h1 {
+    margin:
+        15px 0 24px;
+
+    font-size:
+        clamp(3.4rem, 8vw, 7.5rem);
+
+    line-height: 0.92;
+    letter-spacing: -6px;
+}
+
+.about-hero h1 span {
+    color: #8595ff;
+}
+
+.about-hero > p:last-child {
+    max-width: 630px;
+
+    margin: auto;
+
+    color: #858a9a;
+
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.about-content {
+    max-width: 1050px;
+
+    margin: auto;
+
+    padding:
+        0 25px 100px;
+}
+
+.about-feature-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 14px;
+}
+
+.about-feature {
+    padding: 24px;
+
+    border: 1px solid var(--border);
+    border-radius: 15px;
+
+    background: #10131c;
+}
+
+.about-feature-icon {
+    width: 45px;
+    height: 45px;
+
+    display: grid;
+    place-items: center;
+
+    margin-bottom: 18px;
+
+    border-radius: 12px;
+
+    background: rgba(111, 102, 255, 0.1);
+
+    font-size: 20px;
+}
+
+.about-feature h2 {
+    margin-bottom: 9px;
+
+    font-size: 16px;
+}
+
+.about-feature p {
+    color: #7d8292;
+
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.about-big-section {
+    margin-top: 70px;
+
+    padding: 40px;
+
+    border: 1px solid var(--border);
+    border-radius: 20px;
+
+    background:
+        radial-gradient(
+            circle at 90% 0%,
+            rgba(102, 89, 255, 0.1),
+            transparent 35%
+        ),
+        #10131c;
+}
+
+.about-big-section h2 {
+    max-width: 700px;
+
+    margin:
+        7px 0 18px;
+
+    font-size:
+        clamp(2rem, 5vw, 4rem);
+
+    letter-spacing: -2px;
+}
+
+.about-big-section > p:last-child {
+    max-width: 700px;
+
+    color: #7f8494;
+
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.about-values {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+.about-value {
+    padding: 17px;
+
+    border-radius: 11px;
+
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.about-value strong {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #aaa5ff;
+
+    font-size: 10px;
+}
+
+.about-value span {
+    color: #74798a;
+
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+.about-footer {
+    padding: 30px 25px 50px;
+
+    color: #555b6c;
+
+    text-align: center;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+    .scene-number {
+        display: none;
+    }
+
+    .hero-title {
+        letter-spacing: -5px;
+    }
+
+    .scene-channels .sticky-stage,
+    .scene-posts .sticky-stage,
+    .scene-events .sticky-stage,
+    .scene-discover .sticky-stage {
+        flex-direction: column;
+
+        justify-content: center;
+
+        gap: 35px;
+
+        padding:
+            80px 22px 30px;
+    }
+
+    .channels-demo,
+    .discover-demo {
+        width: min(650px, 92%);
+    }
+
+    .channels-copy,
+    .posts-copy,
+    .events-copy,
+    .discover-copy {
+        width: min(650px, 92%);
+
+        text-align: center;
+    }
+
+    .channels-copy h2,
+    .posts-copy h2,
+    .events-copy h2,
+    .discover-copy h2 {
+        font-size:
+            clamp(2.6rem, 8vw, 4.5rem);
+
+        letter-spacing: -3px;
+    }
+
+    .welcome-post-stack,
+    .welcome-event-stack {
+        width: min(600px, 92%);
+    }
+
+    .welcome-post-stack {
+        height: 430px;
+    }
+
+    .main-app {
+        grid-template-columns:
+            68px
+            230px
+            minmax(0, 1fr);
+    }
+
+    .about-feature-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 720px) {
+
+    .welcome-nav {
+        padding: 17px;
+    }
+
+    .welcome-nav-status {
+        display: none;
+    }
+
+    .hero-title {
+        flex-direction: column;
+        gap: 3px;
+
+        font-size:
+            clamp(3.5rem, 18vw, 5.5rem);
+
+        letter-spacing: -4px;
+    }
+
+    .hero-description {
+        padding: 0 20px;
+
+        font-size: 15px;
+    }
+
+    .orbit-item {
+        padding: 7px;
+    }
+
+    .orbit-item:not(.orbit-five) {
+        font-size: 0;
+    }
+
+    .orbit-item span {
+        width: 32px;
+        height: 32px;
+    }
+
+    .orbit-one {
+        left: 5%;
+    }
+
+    .orbit-two {
+        right: 5%;
+    }
+
+    .orbit-three {
+        left: 8%;
+    }
+
+    .orbit-four {
+        right: 8%;
+    }
+
+    .orbit-five {
+        top: 18%;
+
+        font-size: 0;
+    }
+
+    .community-copy h2 {
+        font-size:
+            clamp(2.7rem, 13vw, 4.4rem);
+
+        letter-spacing: -3px;
+    }
+
+    .floating-community-card {
+        min-width: auto;
+
+        padding: 10px;
+    }
+
+    .floating-community-card > div:last-child {
+        display: none;
+    }
+
+    .floating-card-a {
+        left: 4%;
+    }
+
+    .floating-card-b {
+        right: 4%;
+    }
+
+    .channels-demo {
+        height: 350px;
+
+        grid-template-columns: 130px 1fr;
+    }
+
+    .demo-sidebar {
+        padding: 12px 8px;
+    }
+
+    .demo-community-title {
+        gap: 6px;
+    }
+
+    .demo-community-title > span {
+        width: 31px;
+        height: 31px;
+    }
+
+    .demo-conversation {
+        padding: 15px;
+    }
+
+    .welcome-post-two {
+        top: 130px;
+    }
+
+    .welcome-post-three {
+        top: 260px;
+    }
+
+    .welcome-post-card {
+        padding: 15px;
+    }
+
+    .discover-demo-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .discover-demo-grid > div {
+        min-height: 85px;
+    }
+
+    .final-content h2 {
+        font-size:
+            clamp(3rem, 15vw, 5rem);
+
+        letter-spacing: -3px;
+    }
+
+
+    /* App becomes rail + content */
+
+    .main-app {
+        grid-template-columns:
+            60px
+            minmax(0, 1fr);
+    }
+
+    .community-rail {
+        grid-column: 1;
+    }
+
+    .app-sidebar {
+        display: none;
+    }
+
+    .app-content {
+        grid-column: 2;
+    }
+
+    .app-page {
+        padding:
+            30px 16px 70px;
+    }
+
+    .page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .community-page-header {
+        align-items: flex-start;
+    }
+
+    .community-page-icon {
+        width: 57px;
+        height: 57px;
+
+        border-radius: 16px;
+
+        font-size: 27px;
+    }
+
+    .community-about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-feature-grid,
+    .about-values {
+        grid-template-columns: 1fr;
+    }
+
+    .about-hero h1 {
+        letter-spacing: -4px;
+    }
+
+    .about-big-section {
+        padding: 25px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .community-copy .scene-description {
+        font-size: 12px;
+    }
+
+    .channels-demo {
+        grid-template-columns: 105px 1fr;
+    }
+
+    .demo-community-title div {
+        display: none;
+    }
+
+    .demo-channel {
+        font-size: 9px;
+    }
+
+    .welcome-post-card > p {
+        font-size: 10px;
+    }
+
+    .welcome-event-card {
+        padding: 14px;
+    }
+
+    .discover-demo {
+        padding: 12px;
+    }
+
+    .post-composer {
+        padding: 13px;
+    }
+
+    .composer-avatar {
+        display: none;
+    }
+
+    .app-event-location {
+        display: none;
+    }
+
+}
+
+/* =========================================================
+   FIREBASE AUTH
+========================================================= */
+
+.create-account-btn {
+    width: 100%;
+    padding: 14px 17px;
+    border: 0;
+    border-radius: 12px;
+    color: #fff;
+    background: linear-gradient(135deg, #625cff, #8068ff);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 800;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.create-account-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(100, 91, 255, 0.22);
+}
+
+.auth-modal-card {
+    width: min(460px, calc(100vw - 32px));
+}
+
+.auth-panel {
+    padding: 22px;
+}
+
+.auth-copy {
+    margin-bottom: 18px;
+    color: #7d8293;
+    font-size: 11px;
+    line-height: 1.65;
+}
+
+.auth-form {
+    display: grid;
+    gap: 13px;
+}
+
+.auth-form label > span {
+    display: block;
+    margin-bottom: 7px;
+    color: #8d92a3;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    outline: 0;
+    color: #f4f5fb;
+    background: #0c0f17;
+    font-size: 12px;
+}
+
+.auth-form input:focus {
+    border-color: rgba(132, 124, 255, 0.48);
+}
+
+.auth-submit-btn {
+    width: 100%;
+    margin-top: 3px;
+}
+
+.auth-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.auth-links {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 15px;
+}
+
+.auth-links button,
+.auth-text-button {
+    border: 0;
+    color: #8e88ff;
+    background: transparent;
+    cursor: pointer;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.auth-links button:hover,
+.auth-text-button:hover {
+    color: #b4b0ff;
+}
+
+.auth-message {
+    padding: 10px 11px;
+    border: 1px solid rgba(255, 119, 132, 0.18);
+    border-radius: 8px;
+    color: #ff939d;
+    background: rgba(255, 119, 132, 0.06);
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+.auth-message.success {
+    border-color: rgba(132, 124, 255, 0.22);
+    color: #aaa5ff;
+    background: rgba(111, 102, 255, 0.08);
+}
+
+.verification-icon {
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 15px;
+    border-radius: 16px;
+    color: #aaa5ff;
+    background: rgba(111, 102, 255, 0.12);
+    font-size: 25px;
+}
+
+#verificationPanel {
+    text-align: center;
+}
+
+#verificationPanel h3 {
+    margin-bottom: 9px;
+    font-size: 18px;
+}
+
+#verificationPanel .auth-copy {
+    margin: 0 auto 16px;
+}
+
+#verificationPanel .secondary-app-btn {
+    margin-top: 9px;
+}
+
+#verificationPanel .auth-text-button {
+    margin-top: 15px;
+}
+
+.settings-full-button {
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    .auth-links {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+
+/* =========================================================
+   FIRESTORE PROFILE + SHARED DATA
+========================================================= */
+
+.profile-modal-card {
+    width: min(500px, calc(100vw - 32px));
+}
+
+.profile-signout {
+    width: 100%;
+    margin-top: 16px;
+    text-align: center;
+}
+
+.auth-form select {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    outline: 0;
+    color: #f4f5fb;
+    background: #0c0f17;
+    font-size: 12px;
+}
+
+.auth-form select:focus {
+    border-color: rgba(132, 124, 255, 0.48);
+}
+
+.settings-profile-summary {
+    display: grid;
+    gap: 5px;
+    padding: 14px 15px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.018);
+}
+
+.settings-profile-summary > span {
+    color: #707687;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.settings-profile-summary small {
+    color: #8e88ff;
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   USER SETTINGS
+========================================================= */
+
+.settings-section {
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.018);
+}
+
+.settings-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px 9px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+}
+
+.settings-section-heading > span {
+    color: #8d92a3;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+}
+
+.settings-section-heading small {
+    color: #626878;
+    font-size: 8px;
+}
+
+.settings-control-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 13px 14px;
+    cursor: pointer;
+}
+
+.settings-control-row + .settings-control-row {
+    border-top: 1px solid rgba(255, 255, 255, 0.055);
+}
+
+.settings-control-row > span:first-child {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+
+.settings-control-row strong {
+    color: #f2f3f8;
+    font-size: 10px;
+}
+
+.settings-control-row small {
+    color: #717787;
+    font-size: 8px;
+    line-height: 1.45;
+}
+
+.settings-select {
+    min-width: 118px;
+    padding: 8px 28px 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    outline: 0;
+    color: #f3f4f8;
+    background: #0b0e15;
+    font-size: 9px;
+    cursor: pointer;
+}
+
+.settings-select:focus {
+    border-color: rgba(132, 124, 255, 0.55);
+}
+
+.settings-switch {
+    position: relative;
+    flex: 0 0 auto;
+    width: 34px;
+    height: 20px;
+}
+
+.settings-switch input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.settings-switch-track {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    background: #242833;
+    transition: background 160ms ease, border-color 160ms ease;
+}
+
+.settings-switch-track::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #d9dbe3;
+    transition: transform 160ms ease, background 160ms ease;
+}
+
+.settings-switch input:checked + .settings-switch-track {
+    border-color: rgba(132, 124, 255, 0.58);
+    background: rgba(111, 102, 255, 0.78);
+}
+
+.settings-switch input:checked + .settings-switch-track::after {
+    transform: translateX(14px);
+    background: #ffffff;
+}
+
+.settings-switch input:focus-visible + .settings-switch-track {
+    outline: 2px solid rgba(153, 147, 255, 0.65);
+    outline-offset: 2px;
+}
+
+body[data-hc-theme="midnight"] {
+    --bg: #000000;
+    --panel: #07080d;
+    --panel-2: #0a0c12;
+    --border: rgba(255, 255, 255, 0.09);
+}
+
+body[data-hc-theme="soft"] {
+    --bg: #151722;
+    --panel: #1b1e2a;
+    --panel-2: #202431;
+    --border: rgba(255, 255, 255, 0.11);
+}
+
+body.hc-hide-notification-badges #notificationBadge {
+    display: none !important;
+}
+
+body.hc-compact .content-shell,
+body.hc-compact .page-shell {
+    gap: 12px;
+}
+
+body.hc-compact .feed-card,
+body.hc-compact .post-card,
+body.hc-compact .event-card,
+body.hc-compact .discover-card {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+body.hc-compact .sidebar-link {
+    min-height: 34px;
+}
+
+@media (max-width: 520px) {
+    .settings-control-row {
+        align-items: flex-start;
+    }
+
+    .settings-select {
+        min-width: 104px;
+    }
+}
+
+
+/* =========================================================
+   DEVELOPER ACCOUNT / MODERATION
+========================================================= */
+
+.developer-badge {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 7px;
+    border: 1px solid rgba(150, 137, 255, 0.28);
+    border-radius: 999px;
+    color: #bdb7ff;
+    background: rgba(111, 101, 255, 0.12);
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+}
+
+.developer-badge.hidden {
+    display: none;
+}
+
+.inline-developer-badge {
+    margin-top: 4px;
+}
+
+.reply-developer-badge {
+    margin-top: 7px;
+    margin-right: 7px;
+}
+
+.developer-settings-section {
+    border-color: rgba(130, 116, 255, 0.2);
+    background: linear-gradient(180deg, rgba(111, 101, 255, 0.055), rgba(111, 101, 255, 0.018));
+}
+
+.developer-settings-section.hidden {
+    display: none;
+}
+
+.developer-access-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 13px 14px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.developer-access-card div {
+    display: grid;
+    gap: 4px;
+}
+
+.developer-access-card strong {
+    color: #f1f0ff;
+    font-size: 10px;
+}
+
+.developer-access-card small {
+    max-width: 330px;
+    color: #777d8f;
+    font-size: 8px;
+    line-height: 1.5;
+}
+
+.developer-status-pill {
+    flex-shrink: 0;
+    padding: 5px 8px;
+    border-radius: 999px;
+    color: #a9ffcf;
+    background: rgba(70, 211, 133, 0.1);
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+}
+
+.reply-delete-button {
+    float: right;
+    margin-top: 5px;
+    padding: 4px 7px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: #7c8190;
+    background: transparent;
+    cursor: pointer;
+    font-size: 7px;
+    font-weight: 800;
+}
+
+.reply-delete-button:hover {
+    color: #ff8a94;
+    border-color: rgba(255, 91, 104, 0.12);
+    background: rgba(255, 91, 104, 0.06);
+}
+
+
+/* =========================================================
+   APPLE GLASS THEME — TEST BUILD
+   Apple-inspired light palette + browser-safe Liquid Glass
+   Midnight and Soft Contrast remain available in Settings.
+========================================================= */
+
+body[data-hc-theme="apple"] {
+    --bg: #f5f5f7;
+    --bg-deep: #ffffff;
+    --surface: rgba(255, 255, 255, 0.62);
+    --surface-2: rgba(255, 255, 255, 0.76);
+    --surface-3: rgba(246, 246, 248, 0.82);
+    --panel: rgba(255, 255, 255, 0.68);
+    --panel-2: rgba(247, 247, 249, 0.78);
+    --border: rgba(0, 0, 0, 0.085);
+    --border-bright: rgba(0, 113, 227, 0.34);
+    --text: #1d1d1f;
+    --muted: #6e6e73;
+    --muted-2: #86868b;
+    --purple: #0071e3;
+    --purple-light: #2997ff;
+    --blue: #0071e3;
+    --danger: #ff3b30;
+    --glass-fill: rgba(255, 255, 255, 0.58);
+    --glass-fill-strong: rgba(255, 255, 255, 0.76);
+    --glass-border: rgba(255, 255, 255, 0.76);
+    --glass-edge: rgba(0, 0, 0, 0.08);
+    --glass-shadow: 0 18px 60px rgba(30, 35, 50, 0.10);
+    --glass-shadow-soft: 0 10px 35px rgba(30, 35, 50, 0.075);
+
+    color: var(--text);
+    background:
+        radial-gradient(circle at 78% 6%, rgba(76, 151, 255, 0.14), transparent 25rem),
+        radial-gradient(circle at 18% 38%, rgba(175, 116, 255, 0.10), transparent 28rem),
+        #f5f5f7;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "SF Pro Text",
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+}
+
+body[data-hc-theme="apple"] button:focus-visible,
+body[data-hc-theme="apple"] input:focus-visible,
+body[data-hc-theme="apple"] textarea:focus-visible,
+body[data-hc-theme="apple"] select:focus-visible {
+    outline-color: #0071e3;
+}
+
+
+/* =========================================================
+   LIQUID GLASS MATERIAL
+========================================================= */
+
+body[data-hc-theme="apple"] :is(
+    .community-card,
+    .post-composer,
+    .post-card,
+    .app-event-card,
+    .activity-card,
+    .community-about-card,
+    .empty-content-card,
+    .discover-search,
+    .sidebar-tip,
+    .settings-profile-summary,
+    .settings-section,
+    .app-modal,
+    .welcome-post-card,
+    .welcome-event-card,
+    .discover-demo,
+    .channels-demo
+) {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.76),
+            rgba(255, 255, 255, 0.46)
+        );
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.96),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.28),
+        0 0 0 1px rgba(0, 0, 0, 0.025),
+        var(--glass-shadow-soft);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    backdrop-filter: blur(28px) saturate(180%);
+}
+
+body[data-hc-theme="apple"] :is(
+    .community-card,
+    .post-composer,
+    .post-card,
+    .app-event-card,
+    .activity-card,
+    .community-about-card,
+    .empty-content-card,
+    .discover-search,
+    .sidebar-tip,
+    .settings-profile-summary,
+    .settings-section,
+    .app-modal,
+    .welcome-post-card,
+    .welcome-event-card,
+    .discover-demo,
+    .channels-demo
+)::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            120deg,
+            rgba(255, 255, 255, 0.46),
+            transparent 30%,
+            transparent 70%,
+            rgba(255, 255, 255, 0.18)
+        );
+    opacity: 0.72;
+}
+
+body[data-hc-theme="apple"] :is(
+    .community-card,
+    .post-composer,
+    .post-card,
+    .app-event-card,
+    .activity-card,
+    .community-about-card,
+    .empty-content-card,
+    .discover-search,
+    .sidebar-tip,
+    .settings-profile-summary,
+    .settings-section,
+    .app-modal,
+    .welcome-post-card,
+    .welcome-event-card,
+    .discover-demo,
+    .channels-demo
+)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            170px circle at var(--glass-pointer-x, 50%) var(--glass-pointer-y, 0%),
+            rgba(255, 255, 255, 0.78),
+            rgba(255, 255, 255, 0.18) 36%,
+            transparent 70%
+        );
+    opacity: 0;
+    transition: opacity 180ms ease;
+}
+
+body[data-hc-theme="apple"] :is(
+    .community-card,
+    .post-composer,
+    .post-card,
+    .app-event-card,
+    .activity-card,
+    .community-about-card,
+    .empty-content-card,
+    .discover-search,
+    .sidebar-tip,
+    .settings-profile-summary,
+    .settings-section,
+    .app-modal,
+    .welcome-post-card,
+    .welcome-event-card,
+    .discover-demo,
+    .channels-demo
+).hc-glass-hot::after {
+    opacity: 0.7;
+}
+
+body[data-hc-theme="apple"] :is(
+    .community-card,
+    .post-card,
+    .app-event-card,
+    .activity-card
+) {
+    transition:
+        transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+        box-shadow 220ms ease,
+        border-color 220ms ease;
+}
+
+body[data-hc-theme="apple"] :is(
+    .community-card,
+    .post-card,
+    .app-event-card,
+    .activity-card
+):hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.96);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        0 22px 65px rgba(30, 35, 50, 0.13);
+}
+
+
+/* =========================================================
+   WELCOME EXPERIENCE — APPLE-INSPIRED
+========================================================= */
+
+body[data-hc-theme="apple"] .welcome-experience,
+body[data-hc-theme="apple"] .scene-intro,
+body[data-hc-theme="apple"] .scene-communities,
+body[data-hc-theme="apple"] .scene-channels,
+body[data-hc-theme="apple"] .scene-posts,
+body[data-hc-theme="apple"] .scene-events,
+body[data-hc-theme="apple"] .scene-discover,
+body[data-hc-theme="apple"] .scene-final,
+body[data-hc-theme="apple"] .sticky-stage {
+    color: #1d1d1f;
+    background-color: #f5f5f7;
+}
+
+body[data-hc-theme="apple"] .welcome-experience {
+    background:
+        radial-gradient(circle at 50% 5%, rgba(90, 161, 255, 0.16), transparent 30rem),
+        #f5f5f7;
+}
+
+body[data-hc-theme="apple"] .welcome-nav {
+    width: calc(100% - 28px);
+    top: 14px;
+    left: 14px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.58);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.96),
+        0 12px 35px rgba(30, 35, 50, 0.08);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+}
+
+body[data-hc-theme="apple"] .nav-brand {
+    color: rgba(29, 29, 31, 0.74);
+}
+
+body[data-hc-theme="apple"] .nav-logo,
+body[data-hc-theme="apple"] .final-logo {
+    color: #ffffff;
+    background: linear-gradient(145deg, #0a84ff, #0066cc);
+    box-shadow: 0 12px 30px rgba(0, 113, 227, 0.24);
+}
+
+body[data-hc-theme="apple"] .welcome-nav-status,
+body[data-hc-theme="apple"] .intro-small-text,
+body[data-hc-theme="apple"] .scene-eyebrow,
+body[data-hc-theme="apple"] .page-eyebrow {
+    color: #0071e3;
+}
+
+body[data-hc-theme="apple"] .hero-title,
+body[data-hc-theme="apple"] .community-copy h2,
+body[data-hc-theme="apple"] .channels-copy h2,
+body[data-hc-theme="apple"] .posts-copy h2,
+body[data-hc-theme="apple"] .events-copy h2,
+body[data-hc-theme="apple"] .discover-copy h2,
+body[data-hc-theme="apple"] .final-content h2 {
+    color: #1d1d1f;
+}
+
+body[data-hc-theme="apple"] .hero-title strong,
+body[data-hc-theme="apple"] .reveal-line.accent,
+body[data-hc-theme="apple"] .channels-copy h2 span,
+body[data-hc-theme="apple"] .posts-copy h2 span,
+body[data-hc-theme="apple"] .events-copy h2 span,
+body[data-hc-theme="apple"] .discover-copy h2 span,
+body[data-hc-theme="apple"] .final-content h2 span {
+    color: #0071e3;
+    -webkit-text-fill-color: currentColor;
+}
+
+body[data-hc-theme="apple"] :is(
+    .hero-description,
+    .scene-description,
+    .channels-copy > p:last-child,
+    .posts-copy > p:last-child,
+    .events-copy > p:last-child,
+    .discover-copy > p:last-child,
+    .final-content > p:not(.scene-eyebrow)
+) {
+    color: #6e6e73;
+}
+
+body[data-hc-theme="apple"] .scene-grid {
+    opacity: 0.35;
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+}
+
+body[data-hc-theme="apple"] .glow,
+body[data-hc-theme="apple"] .final-glow {
+    filter: blur(20px);
+    opacity: 0.55;
+}
+
+body[data-hc-theme="apple"] .orbit-item,
+body[data-hc-theme="apple"] .floating-community-card {
+    color: #1d1d1f;
+    border-color: rgba(255, 255, 255, 0.78);
+    background: rgba(255, 255, 255, 0.62);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.96),
+        0 18px 50px rgba(30, 35, 50, 0.10);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    backdrop-filter: blur(22px) saturate(180%);
+}
+
+body[data-hc-theme="apple"] :is(
+    .orbit-item,
+    .floating-community-card,
+    .welcome-post-card,
+    .welcome-event-card,
+    .discover-demo-grid > div,
+    .demo-message
+) span,
+body[data-hc-theme="apple"] :is(
+    .floating-community-card,
+    .welcome-post-card,
+    .welcome-event-card,
+    .discover-demo-grid > div,
+    .demo-message
+) small {
+    color: #86868b;
+}
+
+body[data-hc-theme="apple"] .scroll-hint {
+    color: #86868b;
+}
+
+body[data-hc-theme="apple"] .scroll-mouse {
+    border-color: rgba(29, 29, 31, 0.24);
+}
+
+body[data-hc-theme="apple"] .scroll-wheel {
+    background: #0071e3;
+}
+
+body[data-hc-theme="apple"] .channels-demo,
+body[data-hc-theme="apple"] .discover-demo {
+    color: #1d1d1f;
+}
+
+body[data-hc-theme="apple"] .demo-sidebar {
+    background: rgba(245, 245, 247, 0.72);
+    border-color: rgba(0, 0, 0, 0.07);
+}
+
+body[data-hc-theme="apple"] .demo-channel {
+    color: #6e6e73;
+}
+
+body[data-hc-theme="apple"] .demo-channel.active {
+    color: #1d1d1f;
+    background: rgba(0, 113, 227, 0.09);
+}
+
+body[data-hc-theme="apple"] .demo-conversation,
+body[data-hc-theme="apple"] .discover-demo-search,
+body[data-hc-theme="apple"] .discover-demo-grid > div {
+    background: rgba(255, 255, 255, 0.48);
+    border-color: rgba(0, 0, 0, 0.07);
+}
+
+body[data-hc-theme="apple"] .demo-message p,
+body[data-hc-theme="apple"] .welcome-post-card > p,
+body[data-hc-theme="apple"] .welcome-event-card p {
+    color: #515154;
+}
+
+body[data-hc-theme="apple"] .google-btn,
+body[data-hc-theme="apple"] .email-btn {
+    border-color: rgba(0, 0, 0, 0.08);
+    color: #1d1d1f;
+    background: rgba(255, 255, 255, 0.66);
+    box-shadow: 0 10px 30px rgba(30, 35, 50, 0.08);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    backdrop-filter: blur(18px) saturate(180%);
+}
+
+body[data-hc-theme="apple"] .email-btn {
+    color: #ffffff;
+    border-color: transparent;
+    background: #0071e3;
+}
+
+body[data-hc-theme="apple"] .learn-more-btn {
+    color: #0071e3;
+}
+
+
+/* =========================================================
+   MAIN APP — LIGHT CONTENT + FLOATING GLASS NAVIGATION
+========================================================= */
+
+body[data-hc-theme="apple"] .main-app {
+    background:
+        radial-gradient(circle at 82% 8%, rgba(77, 156, 255, 0.13), transparent 28rem),
+        radial-gradient(circle at 45% 80%, rgba(191, 132, 255, 0.08), transparent 34rem),
+        #f5f5f7;
+}
+
+body[data-hc-theme="apple"] .community-rail {
+    margin: 12px 0 12px 12px;
+    height: calc(100vh - 24px);
+    padding: 13px 0;
+    border: 1px solid rgba(255, 255, 255, 0.76);
+    border-radius: 24px 0 0 24px;
+    background: rgba(255, 255, 255, 0.54);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.96),
+        0 16px 45px rgba(30, 35, 50, 0.09);
+    -webkit-backdrop-filter: blur(28px) saturate(190%);
+    backdrop-filter: blur(28px) saturate(190%);
+}
+
+body[data-hc-theme="apple"] .app-sidebar {
+    margin: 12px 12px 12px 0;
+    height: calc(100vh - 24px);
+    border: 1px solid rgba(255, 255, 255, 0.76);
+    border-left: 0;
+    border-radius: 0 24px 24px 0;
+    background: rgba(255, 255, 255, 0.54);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.96),
+        0 16px 45px rgba(30, 35, 50, 0.09);
+    -webkit-backdrop-filter: blur(28px) saturate(190%);
+    backdrop-filter: blur(28px) saturate(190%);
+}
+
+body[data-hc-theme="apple"] .rail-logo,
+body[data-hc-theme="apple"] .rail-button,
+body[data-hc-theme="apple"] .community-rail-icon {
+    color: #1d1d1f;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.62);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.94),
+        0 6px 18px rgba(30, 35, 50, 0.07);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    backdrop-filter: blur(16px) saturate(180%);
+}
+
+body[data-hc-theme="apple"] .rail-logo {
+    color: #ffffff;
+    border-color: transparent;
+    background: linear-gradient(145deg, #0a84ff, #0066cc);
+}
+
+body[data-hc-theme="apple"] .rail-logo.active::before,
+body[data-hc-theme="apple"] .community-rail-icon.active::before {
+    background: #0071e3;
+}
+
+body[data-hc-theme="apple"] .rail-button {
+    color: #0071e3;
+}
+
+body[data-hc-theme="apple"] .rail-button:hover,
+body[data-hc-theme="apple"] .community-rail-icon:hover,
+body[data-hc-theme="apple"] .community-rail-icon.active {
+    color: #ffffff;
+    background: #0071e3;
+    border-color: rgba(0, 113, 227, 0.65);
+    box-shadow: 0 10px 24px rgba(0, 113, 227, 0.20);
+}
+
+body[data-hc-theme="apple"] .rail-divider {
+    background: rgba(0, 0, 0, 0.09);
+}
+
+body[data-hc-theme="apple"] .sidebar-brand,
+body[data-hc-theme="apple"] .community-sidebar-header,
+body[data-hc-theme="apple"] .sidebar-user {
+    border-color: rgba(0, 0, 0, 0.07);
+}
+
+body[data-hc-theme="apple"] .sidebar-user {
+    background: rgba(255, 255, 255, 0.30);
+}
+
+body[data-hc-theme="apple"] .sidebar-brand small,
+body[data-hc-theme="apple"] .community-sidebar-header small,
+body[data-hc-theme="apple"] .sidebar-label,
+body[data-hc-theme="apple"] .sidebar-user-info span {
+    color: #86868b;
+}
+
+body[data-hc-theme="apple"] .sidebar-brand h2,
+body[data-hc-theme="apple"] .community-sidebar-header h2,
+body[data-hc-theme="apple"] .sidebar-user-info strong {
+    color: #1d1d1f;
+}
+
+body[data-hc-theme="apple"] .sidebar-link,
+body[data-hc-theme="apple"] .sidebar-secondary-link,
+body[data-hc-theme="apple"] .channel-link,
+body[data-hc-theme="apple"] .leave-button {
+    color: #6e6e73;
+}
+
+body[data-hc-theme="apple"] .sidebar-link > span:first-child,
+body[data-hc-theme="apple"] .sidebar-secondary-link > span:first-child,
+body[data-hc-theme="apple"] .channel-link span {
+    color: #86868b;
+}
+
+body[data-hc-theme="apple"] .sidebar-link:hover,
+body[data-hc-theme="apple"] .sidebar-link.active,
+body[data-hc-theme="apple"] .sidebar-secondary-link:hover,
+body[data-hc-theme="apple"] .channel-link:hover,
+body[data-hc-theme="apple"] .channel-link.active {
+    color: #1d1d1f;
+    background: rgba(0, 0, 0, 0.055);
+}
+
+body[data-hc-theme="apple"] .sidebar-badge {
+    color: #ffffff;
+    background: #0071e3;
+}
+
+body[data-hc-theme="apple"] .sidebar-tip strong {
+    color: #0071e3;
+}
+
+body[data-hc-theme="apple"] .sidebar-tip p {
+    color: #6e6e73;
+}
+
+body[data-hc-theme="apple"] .sidebar-community-icon,
+body[data-hc-theme="apple"] .community-page-icon,
+body[data-hc-theme="apple"] .community-card-icon {
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    background: rgba(255, 255, 255, 0.66);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.96),
+        0 8px 24px rgba(30, 35, 50, 0.08);
+}
+
+body[data-hc-theme="apple"] .user-avatar,
+body[data-hc-theme="apple"] .composer-avatar,
+body[data-hc-theme="apple"] .post-avatar,
+body[data-hc-theme="apple"] .activity-icon {
+    color: #0071e3;
+    background: rgba(0, 113, 227, 0.09);
+}
+
+body[data-hc-theme="apple"] .sidebar-user button {
+    color: #6e6e73;
+}
+
+body[data-hc-theme="apple"] .sidebar-user button:hover {
+    color: #1d1d1f;
+    background: rgba(0, 0, 0, 0.055);
+}
+
+
+/* =========================================================
+   CONTENT / TYPOGRAPHY
+========================================================= */
+
+body[data-hc-theme="apple"] .app-content,
+body[data-hc-theme="apple"] .app-page {
+    color: #1d1d1f;
+}
+
+body[data-hc-theme="apple"] .page-header h1,
+body[data-hc-theme="apple"] .community-page-header h1,
+body[data-hc-theme="apple"] .section-heading h2,
+body[data-hc-theme="apple"] .home-empty-state h2,
+body[data-hc-theme="apple"] .home-feed-heading h2,
+body[data-hc-theme="apple"] .channel-header h2,
+body[data-hc-theme="apple"] .community-about-card h2,
+body[data-hc-theme="apple"] .community-card h3,
+body[data-hc-theme="apple"] .app-event-info h3 {
+    color: #1d1d1f;
+}
+
+body[data-hc-theme="apple"] :is(
+    .page-subtitle,
+    .community-page-title > p:not(.page-eyebrow),
+    .channel-header p,
+    .community-card-description,
+    .community-card-meta,
+    .community-meta,
+    .home-feed-heading span,
+    .home-empty-state p,
+    .app-event-info p,
+    .app-event-location,
+    .activity-card p,
+    .activity-card small,
+    .community-about-card > p:not(.page-eyebrow)
+) {
+    color: #6e6e73;
+}
+
+body[data-hc-theme="apple"] .community-card-category,
+body[data-hc-theme="apple"] .app-event-community,
+body[data-hc-theme="apple"] .post-community-chip {
+    color: #0071e3;
+}
+
+body[data-hc-theme="apple"] .channel-header,
+body[data-hc-theme="apple"] .composer-footer,
+body[data-hc-theme="apple"] .reply-section {
+    border-color: rgba(0, 0, 0, 0.075);
+}
+
+body[data-hc-theme="apple"] .home-empty-icon {
+    color: #0071e3;
+    border-color: rgba(0, 113, 227, 0.16);
+    background: rgba(0, 113, 227, 0.08);
+}
+
+
+/* =========================================================
+   CONTROLS / BUTTONS
+========================================================= */
+
+body[data-hc-theme="apple"] .primary-app-btn,
+body[data-hc-theme="apple"] .modal-submit,
+body[data-hc-theme="apple"] .reply-composer button,
+body[data-hc-theme="apple"] .join-community-btn:hover {
+    color: #ffffff;
+    border-color: transparent;
+    background: #0071e3;
+    box-shadow: 0 8px 22px rgba(0, 113, 227, 0.16);
+}
+
+body[data-hc-theme="apple"] .primary-app-btn:hover,
+body[data-hc-theme="apple"] .modal-submit:hover,
+body[data-hc-theme="apple"] .reply-composer button:hover {
+    background: #0077ed;
+    box-shadow: 0 12px 30px rgba(0, 113, 227, 0.22);
+}
+
+body[data-hc-theme="apple"] .secondary-app-btn,
+body[data-hc-theme="apple"] .category-filter,
+body[data-hc-theme="apple"] .join-community-btn {
+    color: #0071e3;
+    border-color: rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.62);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    backdrop-filter: blur(14px) saturate(180%);
+}
+
+body[data-hc-theme="apple"] .secondary-app-btn:hover,
+body[data-hc-theme="apple"] .category-filter:hover,
+body[data-hc-theme="apple"] .category-filter.active {
+    color: #005bb5;
+    border-color: rgba(0, 113, 227, 0.22);
+    background: rgba(0, 113, 227, 0.08);
+}
+
+body[data-hc-theme="apple"] .join-community-btn.joined {
+    color: #6e6e73;
+    background: rgba(0, 0, 0, 0.045);
+}
+
+body[data-hc-theme="apple"] .danger-outline-btn {
+    color: #d70015;
+    border-color: rgba(215, 0, 21, 0.16);
+    background: rgba(255, 59, 48, 0.055);
+}
+
+body[data-hc-theme="apple"] .danger-outline-btn:hover {
+    background: rgba(255, 59, 48, 0.10);
+}
+
+
+/* =========================================================
+   SEARCH / POSTS / REPLIES / EVENTS
+========================================================= */
+
+body[data-hc-theme="apple"] .discover-search span,
+body[data-hc-theme="apple"] .composer-footer > span {
+    color: #86868b;
+}
+
+body[data-hc-theme="apple"] .discover-search input,
+body[data-hc-theme="apple"] .composer-main textarea,
+body[data-hc-theme="apple"] .reply-composer input {
+    color: #1d1d1f;
+}
+
+body[data-hc-theme="apple"] .discover-search input::placeholder,
+body[data-hc-theme="apple"] .composer-main textarea::placeholder,
+body[data-hc-theme="apple"] .reply-composer input::placeholder {
+    color: #86868b;
+}
+
+body[data-hc-theme="apple"] .post-author-info strong,
+body[data-hc-theme="apple"] .reply-item strong,
+body[data-hc-theme="apple"] .activity-card strong {
+    color: #1d1d1f;
+}
+
+body[data-hc-theme="apple"] .post-author-info span,
+body[data-hc-theme="apple"] .reply-item span {
+    color: #86868b;
+}
+
+body[data-hc-theme="apple"] .post-body,
+body[data-hc-theme="apple"] .reply-item p {
+    color: #424245;
+}
+
+body[data-hc-theme="apple"] .post-community-chip {
+    background: rgba(0, 113, 227, 0.08);
+}
+
+body[data-hc-theme="apple"] .post-action-button {
+    color: #6e6e73;
+}
+
+body[data-hc-theme="apple"] .post-action-button:hover,
+body[data-hc-theme="apple"] .post-action-button.liked {
+    color: #0071e3;
+    border-color: rgba(0, 113, 227, 0.12);
+    background: rgba(0, 113, 227, 0.07);
+}
+
+body[data-hc-theme="apple"] .post-delete-button:hover {
+    color: #d70015;
+    background: rgba(255, 59, 48, 0.06);
+}
+
+body[data-hc-theme="apple"] .reply-item {
+    background: rgba(0, 0, 0, 0.035);
+}
+
+body[data-hc-theme="apple"] .reply-composer input {
+    border-color: rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.56);
+}
+
+body[data-hc-theme="apple"] .empty-content-card {
+    color: #86868b;
+    border-style: solid;
+}
+
+body[data-hc-theme="apple"] .app-event-date {
+    color: #0071e3;
+    background: rgba(0, 113, 227, 0.08);
+}
+
+body[data-hc-theme="apple"] .app-event-date strong {
+    color: #1d1d1f;
+}
+
+body[data-hc-theme="apple"] .community-about-grid > div {
+    border-color: rgba(0, 0, 0, 0.07);
+    background: rgba(255, 255, 255, 0.42);
+}
+
+body[data-hc-theme="apple"] .community-about-grid span {
+    color: #86868b;
+}
+
+body[data-hc-theme="apple"] .community-about-grid strong {
+    color: #1d1d1f;
+}
+
+
+/* =========================================================
+   MODALS / AUTH / SETTINGS
+========================================================= */
+
+body[data-hc-theme="apple"] .modal-backdrop {
+    background: rgba(232, 232, 237, 0.52);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    backdrop-filter: blur(18px) saturate(150%);
+}
+
+body[data-hc-theme="apple"] .app-modal {
+    border-radius: 26px;
+    color: #1d1d1f;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        0 35px 100px rgba(30, 35, 50, 0.18);
+}
+
+body[data-hc-theme="apple"] .modal-header h2,
+body[data-hc-theme="apple"] .settings-row strong,
+body[data-hc-theme="apple"] .settings-control-row strong,
+body[data-hc-theme="apple"] .settings-profile-summary strong {
+    color: #1d1d1f;
+}
+
+body[data-hc-theme="apple"] .modal-close {
+    color: #6e6e73;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.62);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94);
+}
+
+body[data-hc-theme="apple"] .modal-close:hover {
+    color: #1d1d1f;
+    background: rgba(255, 255, 255, 0.86);
+}
+
+body[data-hc-theme="apple"] .form-field > span,
+body[data-hc-theme="apple"] .auth-form label > span,
+body[data-hc-theme="apple"] .settings-row p,
+body[data-hc-theme="apple"] .settings-control-row small,
+body[data-hc-theme="apple"] .settings-section-heading small,
+body[data-hc-theme="apple"] .settings-profile-summary > span {
+    color: #6e6e73;
+}
+
+body[data-hc-theme="apple"] .form-field input,
+body[data-hc-theme="apple"] .form-field textarea,
+body[data-hc-theme="apple"] .form-field select,
+body[data-hc-theme="apple"] .auth-form input,
+body[data-hc-theme="apple"] .auth-form select,
+body[data-hc-theme="apple"] .settings-select {
+    color: #1d1d1f;
+    border-color: rgba(0, 0, 0, 0.09);
+    background: rgba(255, 255, 255, 0.68);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.025);
+}
+
+body[data-hc-theme="apple"] :is(
+    .form-field input,
+    .form-field textarea,
+    .form-field select,
+    .auth-form input,
+    .auth-form select,
+    .settings-select
+):focus {
+    border-color: rgba(0, 113, 227, 0.42);
+    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.08);
+}
+
+body[data-hc-theme="apple"] .auth-copy,
+body[data-hc-theme="apple"] .auth-message,
+body[data-hc-theme="apple"] .auth-links,
+body[data-hc-theme="apple"] .auth-text-button {
+    color: #6e6e73;
+}
+
+body[data-hc-theme="apple"] .auth-links button:hover,
+body[data-hc-theme="apple"] .auth-text-button:hover,
+body[data-hc-theme="apple"] .settings-profile-summary small,
+body[data-hc-theme="apple"] .settings-row > span {
+    color: #0071e3;
+}
+
+body[data-hc-theme="apple"] .settings-section-heading {
+    border-color: rgba(0, 0, 0, 0.065);
+}
+
+body[data-hc-theme="apple"] .settings-section-heading > span {
+    color: #6e6e73;
+}
+
+body[data-hc-theme="apple"] .settings-control-row + .settings-control-row {
+    border-color: rgba(0, 0, 0, 0.065);
+}
+
+body[data-hc-theme="apple"] .settings-switch-track {
+    border-color: rgba(0, 0, 0, 0.09);
+    background: rgba(120, 120, 128, 0.18);
+}
+
+body[data-hc-theme="apple"] .settings-switch-track::after {
+    background: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+}
+
+body[data-hc-theme="apple"] .settings-switch input:checked + .settings-switch-track {
+    border-color: #34c759;
+    background: #34c759;
+}
+
+body[data-hc-theme="apple"] .developer-badge,
+body[data-hc-theme="apple"] .inline-developer-badge,
+body[data-hc-theme="apple"] .reply-developer-badge {
+    color: #0066cc;
+    border-color: rgba(0, 113, 227, 0.18);
+    background: rgba(0, 113, 227, 0.08);
+}
+
+body[data-hc-theme="apple"] .developer-settings-section,
+body[data-hc-theme="apple"] .developer-access-card {
+    border-color: rgba(0, 113, 227, 0.14);
+}
+
+
+/* =========================================================
+   ABOUT PAGE
+========================================================= */
+
+body.about-page[data-hc-theme="apple"] {
+    color: #1d1d1f;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(73, 153, 255, 0.14), transparent 34rem),
+        #f5f5f7;
+}
+
+body.about-page[data-hc-theme="apple"] .about-nav {
+    position: sticky;
+    top: 14px;
+    z-index: 20;
+    margin-top: 14px;
+    padding: 11px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.76);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.58);
+    box-shadow: 0 12px 35px rgba(30, 35, 50, 0.08);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+}
+
+body.about-page[data-hc-theme="apple"] .about-logo {
+    color: #ffffff;
+    background: linear-gradient(145deg, #0a84ff, #0066cc);
+}
+
+body.about-page[data-hc-theme="apple"] .about-brand,
+body.about-page[data-hc-theme="apple"] .about-back-link,
+body.about-page[data-hc-theme="apple"] h1,
+body.about-page[data-hc-theme="apple"] h2,
+body.about-page[data-hc-theme="apple"] h3,
+body.about-page[data-hc-theme="apple"] strong {
+    color: #1d1d1f;
+}
+
+body.about-page[data-hc-theme="apple"] .about-back-link:hover {
+    color: #0071e3;
+}
+
+body.about-page[data-hc-theme="apple"] :is(
+    .about-hero,
+    .about-section,
+    .about-card,
+    .about-feature-card,
+    .about-safety-card,
+    .about-roadmap-card
+) {
+    border-color: rgba(0, 0, 0, 0.07);
+}
+
+body.about-page[data-hc-theme="apple"] :is(
+    p,
+    small,
+    .about-footer
+) {
+    color: #6e6e73;
+}
+
+
+/* =========================================================
+   RESPONSIVE TUNING FOR THE FLOATING GLASS SHELL
+========================================================= */
+
+@media (max-width: 900px) {
+    body[data-hc-theme="apple"] .community-rail,
+    body[data-hc-theme="apple"] .app-sidebar {
+        margin-top: 8px;
+        margin-bottom: 8px;
+        height: calc(100vh - 16px);
+    }
+
+    body[data-hc-theme="apple"] .community-rail {
+        margin-left: 8px;
+    }
+
+    body[data-hc-theme="apple"] .app-sidebar {
+        margin-right: 8px;
+    }
+}
+
+@media (max-width: 720px) {
+    body[data-hc-theme="apple"] .community-rail,
+    body[data-hc-theme="apple"] .app-sidebar {
+        margin: 0;
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    body[data-hc-theme="apple"] .welcome-nav {
+        width: calc(100% - 16px);
+        top: 8px;
+        left: 8px;
+    }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    body[data-hc-theme="apple"] :is(
+        .welcome-nav,
+        .community-rail,
+        .app-sidebar,
+        .community-card,
+        .post-composer,
+        .post-card,
+        .app-event-card,
+        .activity-card,
+        .community-about-card,
+        .empty-content-card,
+        .discover-search,
+        .sidebar-tip,
+        .settings-profile-summary,
+        .settings-section,
+        .app-modal
+    ) {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        background: rgba(255, 255, 255, 0.94);
+    }
+}
+
+/* =========================================================
+   APPLE LIQUID GLASS — V2 CORRECTION PASS
+   ---------------------------------------------------------
+   The content layer stays clean and readable. Liquid Glass is
+   reserved for navigation and interactive controls, matching
+   Apple's functional-layer hierarchy more closely.
+========================================================= */
+
+body[data-hc-theme="apple"] {
+    --apple-bg: #f5f5f7;
+    --apple-bg-raised: #ffffff;
+    --apple-text: #1d1d1f;
+    --apple-secondary: #6e6e73;
+    --apple-tertiary: #86868b;
+    --apple-blue: #0071e3;
+    --apple-blue-bright: #0a84ff;
+    --apple-separator: rgba(0, 0, 0, 0.10);
+    --apple-card-border: rgba(0, 0, 0, 0.075);
+    --apple-card-shadow: 0 12px 38px rgba(0, 0, 0, 0.055);
+    --liquid-clear: rgba(255, 255, 255, 0.34);
+    --liquid-clear-strong: rgba(255, 255, 255, 0.48);
+    --liquid-edge: rgba(255, 255, 255, 0.82);
+    --liquid-shadow: 0 14px 42px rgba(18, 26, 42, 0.12);
+    color: var(--apple-text);
+}
+
+/* ---------- Keep the content layer solid and legible ---------- */
+body[data-hc-theme="apple"] :is(
+    .community-card,
+    .post-composer,
+    .post-card,
+    .app-event-card,
+    .activity-card,
+    .community-about-card,
+    .empty-content-card,
+    .discover-search,
+    .sidebar-tip,
+    .settings-profile-summary,
+    .settings-section,
+    .welcome-post-card,
+    .welcome-event-card,
+    .discover-demo,
+    .channels-demo
+) {
+    border-color: var(--apple-card-border);
+    background: rgba(255, 255, 255, 0.90);
+    box-shadow: var(--apple-card-shadow);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+body[data-hc-theme="apple"] :is(
+    .community-card,
+    .post-composer,
+    .post-card,
+    .app-event-card,
+    .activity-card,
+    .community-about-card,
+    .empty-content-card,
+    .discover-search,
+    .sidebar-tip,
+    .settings-profile-summary,
+    .settings-section,
+    .welcome-post-card,
+    .welcome-event-card,
+    .discover-demo,
+    .channels-demo
+)::before,
+body[data-hc-theme="apple"] :is(
+    .community-card,
+    .post-composer,
+    .post-card,
+    .app-event-card,
+    .activity-card,
+    .community-about-card,
+    .empty-content-card,
+    .discover-search,
+    .sidebar-tip,
+    .settings-profile-summary,
+    .settings-section,
+    .welcome-post-card,
+    .welcome-event-card,
+    .discover-demo,
+    .channels-demo
+)::after {
+    content: none !important;
+}
+
+body[data-hc-theme="apple"] :is(
+    .community-card,
+    .post-card,
+    .app-event-card,
+    .activity-card
+):hover {
+    border-color: rgba(0, 0, 0, 0.11);
+    box-shadow: 0 18px 46px rgba(0, 0, 0, 0.075);
+}
+
+/* ---------- Liquid Glass functional layer ---------- */
+body[data-hc-theme="apple"] :is(
+    .welcome-nav,
+    .community-rail,
+    .app-sidebar,
+    .app-modal
+) {
+    border-color: var(--liquid-edge);
+    background:
+        radial-gradient(
+            360px circle at var(--glass-pointer-x, 50%) var(--glass-pointer-y, 0%),
+            rgba(255, 255, 255, 0.54),
+            transparent 54%
+        ),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.48), rgba(255, 255, 255, 0.24));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.98),
+        inset 1px 0 0 rgba(255, 255, 255, 0.50),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.28),
+        0 0 0 1px rgba(0, 0, 0, 0.025),
+        var(--liquid-shadow);
+    -webkit-backdrop-filter: blur(30px) saturate(190%) brightness(1.04);
+    backdrop-filter: blur(30px) saturate(190%) brightness(1.04);
+}
+
+body[data-hc-theme="apple"] :is(
+    .rail-button,
+    .community-rail-icon,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .learn-more-btn
+) {
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    color: var(--apple-text);
+    background:
+        radial-gradient(
+            100px circle at var(--glass-pointer-x, 50%) var(--glass-pointer-y, 0%),
+            rgba(255, 255, 255, 0.72),
+            transparent 58%
+        ),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0.25));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.98),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.26),
+        0 5px 18px rgba(18, 26, 42, 0.09);
+    -webkit-backdrop-filter: blur(20px) saturate(190%) brightness(1.04);
+    backdrop-filter: blur(20px) saturate(190%) brightness(1.04);
+}
+
+body[data-hc-theme="apple"] :is(
+    .rail-button,
+    .community-rail-icon,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .learn-more-btn
+):hover {
+    color: #005bb5;
+    border-color: rgba(255, 255, 255, 0.94);
+    background:
+        radial-gradient(
+            120px circle at var(--glass-pointer-x, 50%) var(--glass-pointer-y, 0%),
+            rgba(255, 255, 255, 0.90),
+            transparent 58%
+        ),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.66), rgba(224, 239, 255, 0.34));
+    box-shadow:
+        inset 0 1px 0 #ffffff,
+        0 7px 22px rgba(18, 26, 42, 0.11);
+}
+
+/* Tinted Liquid Glass is reserved for primary actions. */
+body[data-hc-theme="apple"] :is(
+    .rail-logo,
+    .nav-logo,
+    .final-logo,
+    .primary-app-btn,
+    .modal-submit,
+    .reply-composer button,
+    .email-btn,
+    .create-account-btn
+) {
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.56);
+    background:
+        radial-gradient(
+            120px circle at var(--glass-pointer-x, 50%) var(--glass-pointer-y, 0%),
+            rgba(255, 255, 255, 0.34),
+            transparent 56%
+        ),
+        linear-gradient(145deg, rgba(10, 132, 255, 0.94), rgba(0, 102, 204, 0.86));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.82),
+        inset 0 -1px 0 rgba(0, 62, 145, 0.24),
+        0 8px 24px rgba(0, 113, 227, 0.20);
+    -webkit-backdrop-filter: blur(20px) saturate(185%);
+    backdrop-filter: blur(20px) saturate(185%);
+}
+
+body[data-hc-theme="apple"] :is(
+    .primary-app-btn,
+    .modal-submit,
+    .reply-composer button,
+    .email-btn,
+    .create-account-btn
+):hover {
+    color: #ffffff;
+    background:
+        radial-gradient(
+            140px circle at var(--glass-pointer-x, 50%) var(--glass-pointer-y, 0%),
+            rgba(255, 255, 255, 0.42),
+            transparent 58%
+        ),
+        linear-gradient(145deg, rgba(28, 143, 255, 0.98), rgba(0, 113, 227, 0.90));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.88),
+        0 11px 28px rgba(0, 113, 227, 0.24);
+}
+
+body[data-hc-theme="apple"] .community-rail-icon.active {
+    color: #0066cc;
+    border-color: rgba(255, 255, 255, 0.96);
+    background:
+        radial-gradient(circle at 35% 18%, rgba(255, 255, 255, 0.92), transparent 42%),
+        linear-gradient(145deg, rgba(225, 241, 255, 0.72), rgba(255, 255, 255, 0.34));
+    box-shadow:
+        inset 0 1px 0 #ffffff,
+        0 8px 24px rgba(0, 113, 227, 0.14);
+}
+
+/* ---------- Fix every light-on-light text regression ---------- */
+body[data-hc-theme="apple"] .hero-title > span,
+body[data-hc-theme="apple"] .reveal-line:first-child,
+body[data-hc-theme="apple"] .reveal-line:not(.accent),
+body[data-hc-theme="apple"] .welcome-post-author strong,
+body[data-hc-theme="apple"] .welcome-event-card h3,
+body[data-hc-theme="apple"] .welcome-event-date strong,
+body[data-hc-theme="apple"] .developer-access-card strong {
+    color: var(--apple-text);
+}
+
+body[data-hc-theme="apple"] .welcome-event-date span,
+body[data-hc-theme="apple"] .welcome-post-actions,
+body[data-hc-theme="apple"] .prototype-note,
+body[data-hc-theme="apple"] .developer-access-card small,
+body[data-hc-theme="apple"] .scene-number {
+    color: var(--apple-secondary);
+}
+
+body[data-hc-theme="apple"] .welcome-event-card small,
+body[data-hc-theme="apple"] .discover-demo-grid small,
+body[data-hc-theme="apple"] .scene-eyebrow,
+body[data-hc-theme="apple"] .intro-small-text,
+body[data-hc-theme="apple"] .page-eyebrow {
+    color: var(--apple-blue);
+}
+
+body[data-hc-theme="apple"] .welcome-event-date {
+    color: var(--apple-secondary);
+    border: 1px solid rgba(0, 113, 227, 0.10);
+    background: rgba(0, 113, 227, 0.075);
+}
+
+body[data-hc-theme="apple"] .developer-access-card {
+    border-color: rgba(0, 113, 227, 0.12);
+    background: rgba(255, 255, 255, 0.72);
+}
+
+body[data-hc-theme="apple"] .developer-status-pill {
+    color: #248a3d;
+    background: rgba(52, 199, 89, 0.11);
+}
+
+/* The dark-theme welcome animation used blur as a dramatic reveal.
+   On the bright Apple theme it looked like broken/faded typography. */
+body[data-hc-theme="apple"] .hero-title,
+body[data-hc-theme="apple"] .reveal-line {
+    filter: none !important;
+}
+
+/* ---------- Stronger typography contrast across welcome scenes ---------- */
+body[data-hc-theme="apple"] .community-copy h2,
+body[data-hc-theme="apple"] .channels-copy h2,
+body[data-hc-theme="apple"] .posts-copy h2,
+body[data-hc-theme="apple"] .events-copy h2,
+body[data-hc-theme="apple"] .discover-copy h2,
+body[data-hc-theme="apple"] .final-content h2 {
+    color: var(--apple-text);
+}
+
+body[data-hc-theme="apple"] :is(
+    .hero-description,
+    .scene-description,
+    .channels-copy > p:last-child,
+    .posts-copy > p:last-child,
+    .events-copy > p:last-child,
+    .discover-copy > p:last-child,
+    .final-content > p:not(.scene-eyebrow),
+    .welcome-post-card > p,
+    .welcome-event-card p,
+    .demo-message p
+) {
+    color: #515154;
+}
+
+body[data-hc-theme="apple"] .welcome-post-author span,
+body[data-hc-theme="apple"] :is(
+    .floating-community-card,
+    .welcome-post-card,
+    .welcome-event-card,
+    .discover-demo-grid > div,
+    .demo-message
+) small {
+    color: var(--apple-secondary);
+}
+
+/* ---------- Cleaner Apple-like scene formatting ---------- */
+body[data-hc-theme="apple"] .scene-grid {
+    opacity: 0.16;
+}
+
+body[data-hc-theme="apple"] .scene-communities,
+body[data-hc-theme="apple"] .scene-channels,
+body[data-hc-theme="apple"] .scene-posts,
+body[data-hc-theme="apple"] .scene-events,
+body[data-hc-theme="apple"] .scene-discover,
+body[data-hc-theme="apple"] .scene-final,
+body[data-hc-theme="apple"] .sticky-stage {
+    background-color: var(--apple-bg);
+}
+
+body[data-hc-theme="apple"] .welcome-post-card,
+body[data-hc-theme="apple"] .welcome-event-card,
+body[data-hc-theme="apple"] .discover-demo,
+body[data-hc-theme="apple"] .channels-demo {
+    border-color: rgba(0, 0, 0, 0.075);
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.075);
+}
+
+body[data-hc-theme="apple"] .discover-demo-search,
+body[data-hc-theme="apple"] .discover-demo-grid > div,
+body[data-hc-theme="apple"] .demo-conversation {
+    border-color: rgba(0, 0, 0, 0.075);
+    background: #f7f7f9;
+}
+
+/* ---------- Main app: glass floats over a calm content canvas ---------- */
+body[data-hc-theme="apple"] .main-app {
+    background:
+        radial-gradient(circle at 8% 18%, rgba(10, 132, 255, 0.13), transparent 28rem),
+        radial-gradient(circle at 92% 10%, rgba(191, 90, 242, 0.09), transparent 30rem),
+        radial-gradient(circle at 72% 88%, rgba(52, 199, 89, 0.055), transparent 32rem),
+        var(--apple-bg);
+}
+
+body[data-hc-theme="apple"] .app-content {
+    background: transparent;
+}
+
+body[data-hc-theme="apple"] .settings-select {
+    color: var(--apple-text);
+    border-color: rgba(255, 255, 255, 0.86);
+    background-color: rgba(255, 255, 255, 0.58);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.98),
+        0 5px 16px rgba(18, 26, 42, 0.07);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    backdrop-filter: blur(18px) saturate(180%);
+}
+
+/* ---------- Accessibility: keep text readable even without transparency ---------- */
+@media (prefers-reduced-transparency: reduce) {
+    body[data-hc-theme="apple"] :is(
+        .welcome-nav,
+        .community-rail,
+        .app-sidebar,
+        .app-modal,
+        .rail-button,
+        .community-rail-icon,
+        .secondary-app-btn,
+        .category-filter,
+        .join-community-btn,
+        .modal-close,
+        .learn-more-btn
+    ) {
+        background: rgba(255, 255, 255, 0.96);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+}
+
+/* =========================================================
+   APPLE WELCOME POST STACK — POSITIONING FIX
+   The first Apple glass pass accidentally changed these
+   animated cards from absolute to relative positioning.
+   Restore the original stacked layout so their top offsets
+   overlap cleanly instead of creating huge vertical gaps.
+========================================================= */
+body[data-hc-theme="apple"] .welcome-post-card {
+    position: absolute;
+}
+
+/* =========================================================
+   APPLE LIQUID GLASS — V3 CLEAR LENS MATERIAL
+   ---------------------------------------------------------
+   Clearer, more refractive-looking glass inspired by the
+   user's reference: the backdrop stays visible, edges catch
+   bright/chromatic light, and controls feel like clear lenses
+   rather than white frosted cards.
+========================================================= */
+
+body[data-hc-theme="apple"] {
+    --liquid-lens-fill: rgba(255, 255, 255, 0.115);
+    --liquid-lens-fill-hover: rgba(255, 255, 255, 0.17);
+    --liquid-lens-border: rgba(255, 255, 255, 0.72);
+    --liquid-lens-shadow:
+        0 18px 44px rgba(24, 32, 48, 0.13),
+        inset 0 1px 1px rgba(255, 255, 255, 0.92),
+        inset 1px 0 1px rgba(255, 255, 255, 0.48),
+        inset -1px 0 1px rgba(118, 180, 255, 0.20),
+        inset 0 -1px 1px rgba(112, 73, 255, 0.20);
+}
+
+/* Give clear glass something subtle to bend/reflect visually. */
+body[data-hc-theme="apple"] .sticky-stage,
+body[data-hc-theme="apple"] .scene-final,
+body[data-hc-theme="apple"] .main-app {
+    background-image:
+        radial-gradient(circle at 12% 8%, rgba(0, 122, 255, 0.15), transparent 27rem),
+        radial-gradient(circle at 88% 18%, rgba(90, 200, 250, 0.12), transparent 24rem),
+        radial-gradient(circle at 78% 84%, rgba(175, 82, 222, 0.10), transparent 28rem),
+        radial-gradient(circle at 24% 88%, rgba(255, 69, 58, 0.055), transparent 25rem);
+    background-color: var(--apple-bg);
+}
+
+/* Main clear-lens surfaces. */
+body[data-hc-theme="apple"] :is(
+    .welcome-nav,
+    .community-rail,
+    .app-sidebar,
+    .app-modal
+) {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid var(--liquid-lens-border);
+    background:
+        radial-gradient(
+            420px circle at var(--glass-pointer-x, 50%) var(--glass-pointer-y, 0%),
+            rgba(255, 255, 255, 0.30),
+            rgba(255, 255, 255, 0.06) 36%,
+            transparent 70%
+        ),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.055));
+    box-shadow: var(--liquid-lens-shadow);
+    -webkit-backdrop-filter: blur(14px) saturate(210%) contrast(1.07) brightness(1.035);
+    backdrop-filter: blur(14px) saturate(210%) contrast(1.07) brightness(1.035);
+}
+
+/* Bright curved rim + colored caustic edge. */
+body[data-hc-theme="apple"] :is(
+    .welcome-nav,
+    .community-rail,
+    .app-sidebar,
+    .app-modal
+)::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+        linear-gradient(115deg,
+            rgba(255, 255, 255, 0.54) 0%,
+            rgba(255, 255, 255, 0.10) 22%,
+            transparent 43%,
+            transparent 67%,
+            rgba(99, 180, 255, 0.12) 82%,
+            rgba(139, 92, 246, 0.14) 100%);
+    opacity: 0.72;
+}
+
+body[data-hc-theme="apple"] :is(
+    .welcome-nav,
+    .community-rail,
+    .app-sidebar,
+    .app-modal
+)::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    z-index: 20;
+    pointer-events: none;
+    border-radius: inherit;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.94),
+        inset 1px 0 0 rgba(255, 255, 255, 0.42),
+        inset -1px 0 0 rgba(65, 164, 255, 0.17),
+        inset 0 -1px 0 rgba(151, 71, 255, 0.18);
+}
+
+/* Clear Liquid Glass controls — not opaque white pills. */
+body[data-hc-theme="apple"] :is(
+    .rail-button,
+    .community-rail-icon,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .learn-more-btn,
+    .settings-select
+) {
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.76);
+    color: var(--apple-text);
+    background:
+        radial-gradient(
+            150px circle at var(--glass-pointer-x, 50%) var(--glass-pointer-y, 0%),
+            rgba(255, 255, 255, 0.42),
+            rgba(255, 255, 255, 0.08) 38%,
+            transparent 70%
+        ),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.19), rgba(255, 255, 255, 0.055));
+    box-shadow:
+        0 8px 24px rgba(20, 28, 44, 0.11),
+        inset 0 1px 1px rgba(255, 255, 255, 0.95),
+        inset 1px 0 0 rgba(255, 255, 255, 0.38),
+        inset -1px 0 0 rgba(64, 156, 255, 0.14),
+        inset 0 -1px 0 rgba(139, 92, 246, 0.16);
+    -webkit-backdrop-filter: blur(10px) saturate(220%) contrast(1.08) brightness(1.04);
+    backdrop-filter: blur(10px) saturate(220%) contrast(1.08) brightness(1.04);
+}
+
+body[data-hc-theme="apple"] :is(
+    .rail-button,
+    .community-rail-icon,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .learn-more-btn
+):hover {
+    color: #005bb5;
+    border-color: rgba(255, 255, 255, 0.96);
+    background:
+        radial-gradient(
+            170px circle at var(--glass-pointer-x, 50%) var(--glass-pointer-y, 0%),
+            rgba(255, 255, 255, 0.58),
+            rgba(255, 255, 255, 0.12) 40%,
+            transparent 72%
+        ),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.24), rgba(220, 239, 255, 0.08));
+    box-shadow:
+        0 10px 28px rgba(20, 28, 44, 0.14),
+        inset 0 1px 1px rgba(255, 255, 255, 1),
+        inset -1px 0 0 rgba(64, 156, 255, 0.20),
+        inset 0 -1px 0 rgba(139, 92, 246, 0.20);
+}
+
+/* Primary tinted glass keeps the clear-lens highlights instead of a flat blue fill. */
+body[data-hc-theme="apple"] :is(
+    .rail-logo,
+    .nav-logo,
+    .final-logo,
+    .primary-app-btn,
+    .modal-submit,
+    .reply-composer button,
+    .email-btn,
+    .create-account-btn
+) {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.68);
+    color: #ffffff;
+    background:
+        radial-gradient(
+            160px circle at var(--glass-pointer-x, 42%) var(--glass-pointer-y, 10%),
+            rgba(255, 255, 255, 0.42),
+            rgba(255, 255, 255, 0.06) 38%,
+            transparent 68%
+        ),
+        linear-gradient(145deg, rgba(0, 132, 255, 0.84), rgba(0, 91, 205, 0.74));
+    box-shadow:
+        0 10px 28px rgba(0, 113, 227, 0.22),
+        inset 0 1px 1px rgba(255, 255, 255, 0.90),
+        inset 1px 0 0 rgba(255, 255, 255, 0.28),
+        inset -1px 0 0 rgba(54, 199, 255, 0.30),
+        inset 0 -1px 0 rgba(111, 66, 193, 0.30);
+    -webkit-backdrop-filter: blur(10px) saturate(220%) contrast(1.08);
+    backdrop-filter: blur(10px) saturate(220%) contrast(1.08);
+}
+
+/* Explicitly repair the final About button. It previously looked like a
+   browser-default rectangular button in the Apple theme. */
+body[data-hc-theme="apple"] button.learn-more-btn {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: auto !important;
+    min-width: 0 !important;
+    margin: 22px auto 0 !important;
+    padding: 10px 16px !important;
+    border-radius: 999px !important;
+    border: 1px solid rgba(255, 255, 255, 0.82) !important;
+    color: #0066cc !important;
+    background:
+        radial-gradient(
+            130px circle at var(--glass-pointer-x, 50%) var(--glass-pointer-y, 0%),
+            rgba(255, 255, 255, 0.58),
+            rgba(255, 255, 255, 0.08) 44%,
+            transparent 72%
+        ),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.055)) !important;
+    box-shadow:
+        0 8px 24px rgba(20, 28, 44, 0.10),
+        inset 0 1px 1px rgba(255, 255, 255, 0.98),
+        inset -1px 0 0 rgba(74, 168, 255, 0.16),
+        inset 0 -1px 0 rgba(139, 92, 246, 0.16) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(220%) contrast(1.08) !important;
+    backdrop-filter: blur(10px) saturate(220%) contrast(1.08) !important;
+    cursor: pointer;
+    font-size: 12px !important;
+    font-weight: 650 !important;
+    line-height: 1 !important;
+    letter-spacing: -0.01em;
+}
+
+body[data-hc-theme="apple"] button.learn-more-btn:hover {
+    color: #004f9e !important;
+    transform: translateY(-1px);
+}
+
+/* Keep content cards clean. Liquid Glass belongs to the control/navigation
+   layer; normal reading surfaces should not turn into milky glass slabs. */
+body[data-hc-theme="apple"] :is(
+    .community-card,
+    .post-composer,
+    .post-card,
+    .app-event-card,
+    .activity-card,
+    .community-about-card,
+    .empty-content-card,
+    .settings-profile-summary,
+    .settings-section,
+    .welcome-post-card,
+    .welcome-event-card,
+    .discover-demo,
+    .channels-demo
+) {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(0, 0, 0, 0.075);
+    box-shadow: 0 12px 38px rgba(0, 0, 0, 0.055);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+/* Reduced transparency remains fully readable. */
+@media (prefers-reduced-transparency: reduce) {
+    body[data-hc-theme="apple"] :is(
+        .welcome-nav,
+        .community-rail,
+        .app-sidebar,
+        .app-modal,
+        .rail-button,
+        .community-rail-icon,
+        .secondary-app-btn,
+        .category-filter,
+        .join-community-btn,
+        .modal-close,
+        .learn-more-btn,
+        .settings-select
+    ) {
+        background: rgba(255, 255, 255, 0.96) !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
+}
+
+/* =========================================================
+   APPLE LIQUID GLASS — V4 MATERIAL + FLOATING NAVIGATION
+   ---------------------------------------------------------
+   - Fixed floating navigation while app content scrolls.
+   - Neutral adaptive glass instead of blue glass controls.
+   - No pointer-following white hotspot.
+   - Static edge lensing / highlights approximate Apple's
+     regular Liquid Glass in a browser-safe way.
+========================================================= */
+
+body[data-hc-theme="apple"] {
+    --hc-lg-fill: rgba(255, 255, 255, 0.24);
+    --hc-lg-fill-hover: rgba(255, 255, 255, 0.34);
+    --hc-lg-fill-strong: rgba(255, 255, 255, 0.38);
+    --hc-lg-border: rgba(255, 255, 255, 0.68);
+    --hc-lg-dark-edge: rgba(21, 28, 40, 0.11);
+    --hc-lg-text: #1d1d1f;
+    --hc-lg-shadow:
+        0 18px 48px rgba(27, 34, 48, 0.13),
+        0 2px 8px rgba(27, 34, 48, 0.055),
+        inset 0 1px 1px rgba(255, 255, 255, 0.92),
+        inset 0 -1px 1px rgba(20, 28, 42, 0.08),
+        inset 1px 0 1px rgba(91, 181, 255, 0.08),
+        inset -1px 0 1px rgba(255, 91, 128, 0.045);
+}
+
+/* A calm content canvas gives the glass a real environment to sample. */
+body[data-hc-theme="apple"] .main-app {
+    background:
+        radial-gradient(circle at 3% 18%, rgba(82, 196, 255, 0.13), transparent 24rem),
+        radial-gradient(circle at 16% 78%, rgba(183, 121, 255, 0.08), transparent 27rem),
+        radial-gradient(circle at 86% 12%, rgba(88, 160, 255, 0.08), transparent 30rem),
+        radial-gradient(circle at 76% 88%, rgba(255, 116, 102, 0.045), transparent 26rem),
+        #f5f5f7;
+}
+
+/* Make sure the content remains in the third grid column when the two
+   navigation panes are fixed and therefore removed from normal flow. */
+body[data-hc-theme="apple"] .app-content {
+    grid-column: 3;
+}
+
+/* ---------- Floating navigation shell ---------- */
+body[data-hc-theme="apple"] .community-rail,
+body[data-hc-theme="apple"] .app-sidebar {
+    position: fixed;
+    top: 14px;
+    bottom: 14px;
+    height: auto;
+    margin: 0;
+    z-index: 60;
+
+    border: 1px solid var(--hc-lg-border);
+    border-radius: 28px;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.13));
+    box-shadow: var(--hc-lg-shadow);
+
+    -webkit-backdrop-filter: blur(22px) saturate(175%) contrast(1.035) brightness(1.02);
+    backdrop-filter: blur(22px) saturate(175%) contrast(1.035) brightness(1.02);
+}
+
+body[data-hc-theme="apple"] .community-rail {
+    left: 12px;
+    width: 60px;
+    padding: 12px 6px;
+}
+
+body[data-hc-theme="apple"] .app-sidebar {
+    left: 82px;
+    width: 244px;
+}
+
+/* Static lensing: bright upper rim, slightly darker lower rim, and tiny
+   chromatic edge separation. It does not chase the mouse. */
+body[data-hc-theme="apple"] .community-rail::before,
+body[data-hc-theme="apple"] .app-sidebar::before,
+body[data-hc-theme="apple"] .welcome-nav::before,
+body[data-hc-theme="apple"] .app-modal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent 22%, transparent 72%, rgba(255, 255, 255, 0.07)),
+        linear-gradient(110deg, rgba(76, 181, 255, 0.055), transparent 24%, transparent 76%, rgba(255, 86, 120, 0.035));
+}
+
+body[data-hc-theme="apple"] .community-rail::after,
+body[data-hc-theme="apple"] .app-sidebar::after,
+body[data-hc-theme="apple"] .welcome-nav::after,
+body[data-hc-theme="apple"] .app-modal::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    z-index: 20;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.92),
+        inset 0 -1px 0 rgba(16, 24, 40, 0.08),
+        inset 1px 0 0 rgba(255, 255, 255, 0.34),
+        inset -1px 0 0 rgba(65, 157, 255, 0.07);
+}
+
+/* Welcome navigation uses the same material language as the sidebar. */
+body[data-hc-theme="apple"] .welcome-nav {
+    top: 12px;
+    left: 50%;
+    width: min(calc(100% - 24px), 1180px);
+    transform: translateX(-50%);
+    padding: 10px 14px;
+    border: 1px solid var(--hc-lg-border);
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.13));
+    box-shadow: var(--hc-lg-shadow);
+    -webkit-backdrop-filter: blur(22px) saturate(175%) contrast(1.035);
+    backdrop-filter: blur(22px) saturate(175%) contrast(1.035);
+}
+
+/* ---------- Controls: neutral glass, not blue glass ---------- */
+body[data-hc-theme="apple"] :is(
+    .rail-logo,
+    .rail-button,
+    .community-rail-icon,
+    .primary-app-btn,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .modal-submit,
+    .reply-composer button,
+    .email-btn,
+    .create-account-btn,
+    .learn-more-btn,
+    .settings-select
+) {
+    -webkit-appearance: none;
+    appearance: none;
+    color: var(--hc-lg-text);
+    border: 1px solid rgba(255, 255, 255, 0.66);
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.12));
+    box-shadow:
+        0 7px 20px rgba(26, 34, 48, 0.095),
+        inset 0 1px 1px rgba(255, 255, 255, 0.92),
+        inset 0 -1px 1px rgba(20, 28, 42, 0.075),
+        inset 1px 0 0 rgba(255, 255, 255, 0.26),
+        inset -1px 0 0 rgba(72, 164, 255, 0.055);
+    -webkit-backdrop-filter: blur(16px) saturate(170%) contrast(1.025);
+    backdrop-filter: blur(16px) saturate(170%) contrast(1.025);
+    transition:
+        transform 160ms ease,
+        background 160ms ease,
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        color 160ms ease;
+}
+
+body[data-hc-theme="apple"] :is(
+    .rail-logo,
+    .rail-button,
+    .community-rail-icon,
+    .primary-app-btn,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .modal-submit,
+    .reply-composer button,
+    .email-btn,
+    .create-account-btn,
+    .learn-more-btn
+):hover {
+    color: #1d1d1f;
+    border-color: rgba(255, 255, 255, 0.82);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.40), rgba(255, 255, 255, 0.18));
+    box-shadow:
+        0 9px 24px rgba(26, 34, 48, 0.12),
+        inset 0 1px 1px rgba(255, 255, 255, 0.98),
+        inset 0 -1px 1px rgba(20, 28, 42, 0.08);
+    transform: translateY(-1px);
+}
+
+/* Blue is now an accent for meaning/selection, not the glass material. */
+body[data-hc-theme="apple"] .rail-logo {
+    color: #0071e3;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.14));
+    text-shadow: none;
+}
+
+body[data-hc-theme="apple"] .rail-button {
+    color: #3a3a3c;
+}
+
+body[data-hc-theme="apple"] .rail-button:hover,
+body[data-hc-theme="apple"] .community-rail-icon:hover {
+    color: #1d1d1f;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.20));
+}
+
+body[data-hc-theme="apple"] .community-rail-icon.active,
+body[data-hc-theme="apple"] .category-filter.active,
+body[data-hc-theme="apple"] .join-community-btn:not(.joined),
+body[data-hc-theme="apple"] .primary-app-btn,
+body[data-hc-theme="apple"] .modal-submit,
+body[data-hc-theme="apple"] .reply-composer button,
+body[data-hc-theme="apple"] .email-btn,
+body[data-hc-theme="apple"] .create-account-btn {
+    color: #0066cc;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.42), rgba(238, 247, 255, 0.18));
+    border-color: rgba(255, 255, 255, 0.80);
+}
+
+body[data-hc-theme="apple"] .join-community-btn.joined {
+    color: #6e6e73;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.11));
+}
+
+body[data-hc-theme="apple"] .rail-logo.active::before,
+body[data-hc-theme="apple"] .community-rail-icon.active::before {
+    left: -8px;
+    width: 3px;
+    height: 24px;
+    border-radius: 999px;
+    background: #0071e3;
+    box-shadow: 0 0 10px rgba(0, 113, 227, 0.22);
+}
+
+/* The final About control should look like the same glass family. */
+body[data-hc-theme="apple"] button.learn-more-btn {
+    color: #1d1d1f !important;
+    border: 1px solid rgba(255, 255, 255, 0.70) !important;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.13)) !important;
+    box-shadow:
+        0 8px 22px rgba(26, 34, 48, 0.10),
+        inset 0 1px 1px rgba(255, 255, 255, 0.96),
+        inset 0 -1px 1px rgba(20, 28, 42, 0.07) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(170%) !important;
+    backdrop-filter: blur(16px) saturate(170%) !important;
+}
+
+/* Keep reading surfaces out of the Liquid Glass layer. */
+body[data-hc-theme="apple"] :is(
+    .community-card,
+    .post-composer,
+    .post-card,
+    .app-event-card,
+    .activity-card,
+    .community-about-card,
+    .empty-content-card,
+    .settings-profile-summary,
+    .settings-section,
+    .welcome-post-card,
+    .welcome-event-card,
+    .discover-demo,
+    .channels-demo
+) {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(0, 0, 0, 0.075);
+    box-shadow: 0 12px 38px rgba(0, 0, 0, 0.055);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+/* Mobile: keep the compact rail floating; the full sidebar is already
+   hidden by the original responsive rules at this width. */
+@media (max-width: 720px) {
+    body[data-hc-theme="apple"] .main-app {
+        grid-template-columns: 60px minmax(0, 1fr);
+    }
+
+    body[data-hc-theme="apple"] .community-rail {
+        position: fixed;
+        top: 8px;
+        bottom: 8px;
+        left: 8px;
+        width: 44px;
+        height: auto;
+        margin: 0;
+        padding: 8px 3px;
+        border-radius: 22px;
+    }
+
+    body[data-hc-theme="apple"] .app-sidebar {
+        display: none;
+    }
+
+    body[data-hc-theme="apple"] .app-content {
+        grid-column: 2;
+    }
+
+    body[data-hc-theme="apple"] .rail-logo,
+    body[data-hc-theme="apple"] .rail-button,
+    body[data-hc-theme="apple"] .community-rail-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 13px;
+    }
+
+    body[data-hc-theme="apple"] .welcome-nav {
+        top: 8px;
+        left: 8px;
+        width: calc(100% - 16px);
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    body[data-hc-theme="apple"] :is(
+        .community-rail,
+        .app-sidebar,
+        .welcome-nav,
+        .app-modal,
+        .rail-logo,
+        .rail-button,
+        .community-rail-icon,
+        .primary-app-btn,
+        .secondary-app-btn,
+        .category-filter,
+        .join-community-btn,
+        .modal-close,
+        .modal-submit,
+        .reply-composer button,
+        .email-btn,
+        .create-account-btn,
+        .learn-more-btn,
+        .settings-select
+    ) {
+        background: rgba(247, 247, 249, 0.96) !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
+}
+
+/* V4 finishing corrections */
+body[data-hc-theme="apple"] .community-rail {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+body[data-hc-theme="apple"] .app-modal {
+    border: 1px solid var(--hc-lg-border);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.16));
+    box-shadow: var(--hc-lg-shadow);
+    -webkit-backdrop-filter: blur(24px) saturate(175%) contrast(1.035);
+    backdrop-filter: blur(24px) saturate(175%) contrast(1.035);
+}
+
+/* =========================================================
+   APPLE INTRO — REMOVE FLAT TOP BAND
+   Let the intro scene's background continue behind the
+   floating welcome navigation instead of covering it with
+   an opaque sticky-stage fill.
+========================================================= */
+body[data-hc-theme="apple"] .scene-intro > .sticky-stage {
+    background: transparent;
+}
+
+/* =========================================================
+   APPLE LIQUID GLASS — V5 SILVER CANVAS
+   ---------------------------------------------------------
+   The V4 glass material is intentionally preserved. This
+   pass replaces the near-white Apple canvas with a soft,
+   neutral silver/pearl backdrop so the transparent glass,
+   rim highlights and shadows remain visible even in bright
+   scenes. Midnight and Soft Contrast are unaffected.
+========================================================= */
+
+body[data-hc-theme="apple"] {
+    --apple-bg: #e2e4e8;
+    --apple-bg-raised: #f8f8fa;
+    background-color: var(--apple-bg);
+}
+
+/* Neutral silver environment behind the welcome experience. */
+body[data-hc-theme="apple"] .welcome-experience,
+body[data-hc-theme="apple"] .scene-intro,
+body[data-hc-theme="apple"] .scene-communities,
+body[data-hc-theme="apple"] .scene-channels,
+body[data-hc-theme="apple"] .scene-posts,
+body[data-hc-theme="apple"] .scene-events,
+body[data-hc-theme="apple"] .scene-discover,
+body[data-hc-theme="apple"] .scene-final,
+body[data-hc-theme="apple"] .sticky-stage {
+    background-color: var(--apple-bg);
+}
+
+body[data-hc-theme="apple"] .welcome-experience {
+    background:
+        radial-gradient(circle at 50% 4%, rgba(255, 255, 255, 0.72), transparent 31rem),
+        radial-gradient(circle at 8% 32%, rgba(255, 255, 255, 0.26), transparent 24rem),
+        radial-gradient(circle at 92% 72%, rgba(255, 255, 255, 0.18), transparent 28rem),
+        linear-gradient(180deg, #e7e9ed 0%, #dde0e5 100%);
+}
+
+body[data-hc-theme="apple"] .scene-intro {
+    background:
+        radial-gradient(circle at 50% 39%, rgba(255, 255, 255, 0.62), transparent 33rem),
+        radial-gradient(circle at 13% 18%, rgba(255, 255, 255, 0.24), transparent 25rem),
+        radial-gradient(circle at 88% 78%, rgba(255, 255, 255, 0.17), transparent 27rem),
+        linear-gradient(180deg, #e6e8ec 0%, #dde0e5 100%);
+}
+
+/* Sticky scenes use a restrained pearl-grey surface instead of white.
+   This is deliberately neutral: the glass creates the visual effect,
+   not a colourful background glow. */
+body[data-hc-theme="apple"] :is(
+    .scene-communities,
+    .scene-channels,
+    .scene-posts,
+    .scene-events,
+    .scene-discover,
+    .scene-final
+) .sticky-stage,
+body[data-hc-theme="apple"] .scene-final {
+    background-image:
+        radial-gradient(circle at 48% 8%, rgba(255, 255, 255, 0.52), transparent 31rem),
+        radial-gradient(circle at 8% 62%, rgba(255, 255, 255, 0.20), transparent 25rem),
+        radial-gradient(circle at 94% 42%, rgba(255, 255, 255, 0.15), transparent 27rem);
+    background-color: var(--apple-bg);
+}
+
+/* Keep the intro top transparent so the silver scene continues behind
+   the floating navigation without recreating the old flat top band. */
+body[data-hc-theme="apple"] .scene-intro > .sticky-stage {
+    background: transparent;
+}
+
+/* Main application: soft silver canvas similar to Apple's neutral
+   material demos. The V4 floating sidebar now has enough contrast to
+   read as clear glass instead of disappearing into white. */
+body[data-hc-theme="apple"] .main-app {
+    background:
+        radial-gradient(circle at 50% -4%, rgba(255, 255, 255, 0.68), transparent 34rem),
+        radial-gradient(circle at 6% 48%, rgba(255, 255, 255, 0.22), transparent 26rem),
+        radial-gradient(circle at 94% 82%, rgba(255, 255, 255, 0.16), transparent 29rem),
+        linear-gradient(180deg, #e6e8ec 0%, #dfe2e7 100%);
+}
+
+body[data-hc-theme="apple"] .app-content {
+    background: transparent;
+}
+
+/* The About page follows the same silver material environment. */
+body.about-page[data-hc-theme="apple"] {
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.68), transparent 32rem),
+        radial-gradient(circle at 10% 52%, rgba(255, 255, 255, 0.20), transparent 25rem),
+        linear-gradient(180deg, #e6e8ec 0%, #dde0e5 100%);
+}
+
+/* =========================================================
+   APPLE LIQUID GLASS — V6 CLEARER MATERIAL
+   ---------------------------------------------------------
+   V5 had the right neutral silver environment, but its glass
+   fill and blur were still too opaque compared with macOS /
+   iOS Liquid Glass. This pass keeps the same layout and removes
+   more of the milky white layer so the page visibly continues
+   through navigation and controls.
+========================================================= */
+
+body[data-hc-theme="apple"] {
+    --hc-lg-fill: rgba(255, 255, 255, 0.10);
+    --hc-lg-fill-hover: rgba(255, 255, 255, 0.16);
+    --hc-lg-fill-strong: rgba(255, 255, 255, 0.20);
+    --hc-lg-border: rgba(255, 255, 255, 0.58);
+    --hc-lg-shadow:
+        0 18px 46px rgba(24, 31, 43, 0.105),
+        0 2px 7px rgba(24, 31, 43, 0.045),
+        inset 0 1px 1px rgba(255, 255, 255, 0.84),
+        inset 0 -1px 1px rgba(18, 24, 34, 0.09),
+        inset 1px 0 1px rgba(255, 255, 255, 0.22),
+        inset -1px 0 1px rgba(88, 160, 255, 0.045);
+}
+
+/* Large floating panes: substantially clearer and less frosted. */
+body[data-hc-theme="apple"] .community-rail,
+body[data-hc-theme="apple"] .app-sidebar,
+body[data-hc-theme="apple"] .welcome-nav {
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.045));
+    border-color: rgba(255, 255, 255, 0.58);
+    -webkit-backdrop-filter: blur(13px) saturate(155%) contrast(1.025) brightness(1.01);
+    backdrop-filter: blur(13px) saturate(155%) contrast(1.025) brightness(1.01);
+}
+
+/* Keep the glass edge readable without putting a white sheet over it. */
+body[data-hc-theme="apple"] .community-rail::before,
+body[data-hc-theme="apple"] .app-sidebar::before,
+body[data-hc-theme="apple"] .welcome-nav::before,
+body[data-hc-theme="apple"] .app-modal::before {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 18%, transparent 76%, rgba(255, 255, 255, 0.035)),
+        linear-gradient(110deg, rgba(88, 176, 255, 0.032), transparent 26%, transparent 76%, rgba(255, 92, 126, 0.022));
+}
+
+body[data-hc-theme="apple"] .community-rail::after,
+body[data-hc-theme="apple"] .app-sidebar::after,
+body[data-hc-theme="apple"] .welcome-nav::after,
+body[data-hc-theme="apple"] .app-modal::after {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.82),
+        inset 0 -1px 0 rgba(16, 24, 40, 0.10),
+        inset 1px 0 0 rgba(255, 255, 255, 0.20),
+        inset -1px 0 0 rgba(65, 157, 255, 0.045);
+}
+
+/* Small controls should feel like clear pieces of glass too. */
+body[data-hc-theme="apple"] :is(
+    .rail-logo,
+    .rail-button,
+    .community-rail-icon,
+    .primary-app-btn,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .modal-submit,
+    .reply-composer button,
+    .email-btn,
+    .create-account-btn,
+    .learn-more-btn,
+    .settings-select
+) {
+    border-color: rgba(255, 255, 255, 0.58);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.045));
+    box-shadow:
+        0 7px 18px rgba(26, 34, 48, 0.075),
+        inset 0 1px 1px rgba(255, 255, 255, 0.84),
+        inset 0 -1px 1px rgba(20, 28, 42, 0.085),
+        inset 1px 0 0 rgba(255, 255, 255, 0.17),
+        inset -1px 0 0 rgba(72, 164, 255, 0.035);
+    -webkit-backdrop-filter: blur(10px) saturate(150%) contrast(1.02);
+    backdrop-filter: blur(10px) saturate(150%) contrast(1.02);
+}
+
+body[data-hc-theme="apple"] :is(
+    .rail-logo,
+    .rail-button,
+    .community-rail-icon,
+    .primary-app-btn,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .modal-submit,
+    .reply-composer button,
+    .email-btn,
+    .create-account-btn,
+    .learn-more-btn
+):hover {
+    border-color: rgba(255, 255, 255, 0.72);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.075));
+    box-shadow:
+        0 9px 22px rgba(26, 34, 48, 0.095),
+        inset 0 1px 1px rgba(255, 255, 255, 0.90),
+        inset 0 -1px 1px rgba(20, 28, 42, 0.09);
+}
+
+/* Selected controls remain clear; blue is text/accent only. */
+body[data-hc-theme="apple"] .rail-logo,
+body[data-hc-theme="apple"] .rail-button:hover,
+body[data-hc-theme="apple"] .community-rail-icon:hover,
+body[data-hc-theme="apple"] .community-rail-icon.active,
+body[data-hc-theme="apple"] .category-filter.active,
+body[data-hc-theme="apple"] .join-community-btn:not(.joined),
+body[data-hc-theme="apple"] .primary-app-btn,
+body[data-hc-theme="apple"] .modal-submit,
+body[data-hc-theme="apple"] .reply-composer button,
+body[data-hc-theme="apple"] .email-btn,
+body[data-hc-theme="apple"] .create-account-btn {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.055));
+}
+
+body[data-hc-theme="apple"] .join-community-btn.joined {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.035));
+}
+
+body[data-hc-theme="apple"] button.learn-more-btn {
+    border-color: rgba(255, 255, 255, 0.60) !important;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.045)) !important;
+    box-shadow:
+        0 8px 20px rgba(26, 34, 48, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.88),
+        inset 0 -1px 1px rgba(20, 28, 42, 0.08) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(150%) !important;
+    backdrop-filter: blur(10px) saturate(150%) !important;
+}
+
+body[data-hc-theme="apple"] .app-modal {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.055));
+    -webkit-backdrop-filter: blur(15px) saturate(155%) contrast(1.025);
+    backdrop-filter: blur(15px) saturate(155%) contrast(1.025);
+}
+
+
+/* =========================================================
+   APPLE LIQUID GLASS — V7 REFRACTION MATERIAL
+   ---------------------------------------------------------
+   This pass changes the rendering model, not just opacity:
+   - substantially clearer neutral glass
+   - much smaller blur radius
+   - real SVG backdrop displacement in Chromium
+   - CSS-only transparent fallback elsewhere
+   - bright neutral rim + darker lower edge for thickness
+   - stronger neutral variation behind the panes so the
+     transparency/refraction can actually be perceived
+========================================================= */
+
+.hc-liquid-filter-bank {
+    position: fixed;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+body[data-hc-theme="apple"] {
+    --hc-lg-fill: rgba(255, 255, 255, 0.045);
+    --hc-lg-fill-hover: rgba(255, 255, 255, 0.095);
+    --hc-lg-fill-strong: rgba(255, 255, 255, 0.13);
+    --hc-lg-border: rgba(255, 255, 255, 0.52);
+    --hc-lg-shadow:
+        0 14px 34px rgba(31, 38, 50, 0.085),
+        0 2px 6px rgba(31, 38, 50, 0.035),
+        inset 0 1px 0 rgba(255, 255, 255, 0.96),
+        inset 0 -1px 0 rgba(64, 72, 84, 0.15),
+        inset 1px 0 0 rgba(255, 255, 255, 0.44),
+        inset -1px 0 0 rgba(72, 80, 92, 0.08);
+}
+
+/* The glass needs something real to sample. This remains completely
+   neutral: pearl, silver and graphite only — no coloured glow. */
+body[data-hc-theme="apple"] .main-app {
+    background:
+        radial-gradient(ellipse 360px 520px at -2% 18%, rgba(255, 255, 255, 0.72), transparent 72%),
+        radial-gradient(ellipse 310px 460px at 17% 62%, rgba(119, 128, 142, 0.115), transparent 72%),
+        radial-gradient(ellipse 390px 300px at 48% -4%, rgba(255, 255, 255, 0.58), transparent 74%),
+        radial-gradient(ellipse 440px 360px at 94% 88%, rgba(128, 136, 149, 0.07), transparent 76%),
+        linear-gradient(180deg, #e5e7eb 0%, #dfe2e7 100%);
+}
+
+body[data-hc-theme="apple"] .welcome-experience,
+body[data-hc-theme="apple"] .scene-intro {
+    background:
+        radial-gradient(ellipse 420px 520px at 4% 24%, rgba(255, 255, 255, 0.60), transparent 74%),
+        radial-gradient(ellipse 420px 360px at 92% 76%, rgba(126, 134, 148, 0.08), transparent 76%),
+        linear-gradient(180deg, #e6e8ec 0%, #dfe2e7 100%);
+}
+
+/* Main panes: almost-clear material. The visible identity comes from
+   backdrop sampling, the rim and edge depth rather than white fill. */
+body[data-hc-theme="apple"] .community-rail,
+body[data-hc-theme="apple"] .app-sidebar,
+body[data-hc-theme="apple"] .welcome-nav,
+body[data-hc-theme="apple"] .app-modal,
+body.about-page[data-hc-theme="apple"] .about-nav {
+    border-color: rgba(255, 255, 255, 0.52);
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.070), rgba(255, 255, 255, 0.018));
+    box-shadow: var(--hc-lg-shadow);
+    -webkit-backdrop-filter: blur(6px) saturate(135%) contrast(1.015) brightness(1.01);
+    backdrop-filter: blur(6px) saturate(135%) contrast(1.015) brightness(1.01);
+}
+
+/* Chromium can use an SVG reference in backdrop-filter, so it receives
+   a gentle, smoothed displacement pass in addition to the small blur. */
+html.hc-svg-refraction body[data-hc-theme="apple"] .community-rail,
+html.hc-svg-refraction body[data-hc-theme="apple"] .app-sidebar,
+html.hc-svg-refraction body[data-hc-theme="apple"] .welcome-nav,
+html.hc-svg-refraction body[data-hc-theme="apple"] .app-modal,
+html.hc-svg-refraction body.about-page[data-hc-theme="apple"] .about-nav {
+    -webkit-backdrop-filter: blur(5px) saturate(135%) contrast(1.015) brightness(1.01);
+    backdrop-filter:
+        blur(5px)
+        saturate(135%)
+        contrast(1.015)
+        brightness(1.01)
+        url("#hc-liquid-refraction-pane");
+}
+
+/* Neutral optical rim. The upper/left edge catches light while the
+   lower edge is slightly denser, giving the panel visible thickness. */
+body[data-hc-theme="apple"] .community-rail::before,
+body[data-hc-theme="apple"] .app-sidebar::before,
+body[data-hc-theme="apple"] .welcome-nav::before,
+body[data-hc-theme="apple"] .app-modal::before {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.17), transparent 13%, transparent 78%, rgba(73, 82, 96, 0.035)),
+        linear-gradient(105deg, rgba(255, 255, 255, 0.11), transparent 24%, transparent 78%, rgba(62, 70, 82, 0.025));
+}
+
+body[data-hc-theme="apple"] .community-rail::after,
+body[data-hc-theme="apple"] .app-sidebar::after,
+body[data-hc-theme="apple"] .welcome-nav::after,
+body[data-hc-theme="apple"] .app-modal::after {
+    inset: 1px;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.98),
+        inset 1px 0 0 rgba(255, 255, 255, 0.52),
+        inset 0 -1px 0 rgba(59, 68, 82, 0.16),
+        inset -1px 0 0 rgba(74, 82, 94, 0.075);
+}
+
+/* The sidebar's internal regions were still adding a white sheet over
+   the glass. Keep them translucent so the parent material can show. */
+body[data-hc-theme="apple"] .sidebar-user {
+    background: rgba(255, 255, 255, 0.055);
+}
+
+body[data-hc-theme="apple"] .sidebar-tip {
+    border-color: rgba(255, 255, 255, 0.40);
+    background: rgba(255, 255, 255, 0.075);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.60),
+        0 6px 16px rgba(35, 42, 54, 0.035);
+}
+
+body[data-hc-theme="apple"] .sidebar-link:hover,
+body[data-hc-theme="apple"] .sidebar-link.active,
+body[data-hc-theme="apple"] .sidebar-secondary-link:hover,
+body[data-hc-theme="apple"] .channel-link:hover,
+body[data-hc-theme="apple"] .channel-link.active {
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.48),
+        inset 0 -1px 0 rgba(62, 70, 82, 0.055);
+}
+
+/* Controls are separate pieces of clear glass. Keep the fill tiny and
+   use the edge/shadow to define the shape. */
+body[data-hc-theme="apple"] :is(
+    .rail-logo,
+    .rail-button,
+    .community-rail-icon,
+    .primary-app-btn,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .modal-submit,
+    .reply-composer button,
+    .email-btn,
+    .create-account-btn,
+    .learn-more-btn,
+    .settings-select,
+    .about-back-link
+) {
+    border-color: rgba(255, 255, 255, 0.56);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.025));
+    box-shadow:
+        0 6px 16px rgba(31, 38, 50, 0.065),
+        inset 0 1px 0 rgba(255, 255, 255, 0.94),
+        inset 0 -1px 0 rgba(62, 70, 82, 0.12),
+        inset 1px 0 0 rgba(255, 255, 255, 0.34),
+        inset -1px 0 0 rgba(70, 78, 90, 0.055);
+    -webkit-backdrop-filter: blur(4px) saturate(132%) contrast(1.01);
+    backdrop-filter: blur(4px) saturate(132%) contrast(1.01);
+}
+
+html.hc-svg-refraction body[data-hc-theme="apple"] :is(
+    .rail-logo,
+    .rail-button,
+    .community-rail-icon,
+    .primary-app-btn,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .modal-submit,
+    .reply-composer button,
+    .email-btn,
+    .create-account-btn,
+    .learn-more-btn,
+    .about-back-link
+) {
+    -webkit-backdrop-filter: blur(3.5px) saturate(132%) contrast(1.01);
+    backdrop-filter:
+        blur(3.5px)
+        saturate(132%)
+        contrast(1.01)
+        url("#hc-liquid-refraction-control");
+}
+
+body[data-hc-theme="apple"] :is(
+    .rail-logo,
+    .rail-button,
+    .community-rail-icon,
+    .primary-app-btn,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .modal-submit,
+    .reply-composer button,
+    .email-btn,
+    .create-account-btn,
+    .learn-more-btn,
+    .about-back-link
+):hover {
+    border-color: rgba(255, 255, 255, 0.72);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.045));
+    box-shadow:
+        0 8px 19px rgba(31, 38, 50, 0.075),
+        inset 0 1px 0 rgba(255, 255, 255, 0.98),
+        inset 0 -1px 0 rgba(62, 70, 82, 0.12);
+}
+
+/* Selected/primary controls stay clear. Blue communicates state only. */
+body[data-hc-theme="apple"] .rail-logo,
+body[data-hc-theme="apple"] .rail-button:hover,
+body[data-hc-theme="apple"] .community-rail-icon:hover,
+body[data-hc-theme="apple"] .community-rail-icon.active,
+body[data-hc-theme="apple"] .category-filter.active,
+body[data-hc-theme="apple"] .join-community-btn:not(.joined),
+body[data-hc-theme="apple"] .primary-app-btn,
+body[data-hc-theme="apple"] .modal-submit,
+body[data-hc-theme="apple"] .reply-composer button,
+body[data-hc-theme="apple"] .email-btn,
+body[data-hc-theme="apple"] .create-account-btn {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.125), rgba(255, 255, 255, 0.035));
+}
+
+body[data-hc-theme="apple"] .join-community-btn.joined {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.070), rgba(255, 255, 255, 0.018));
+}
+
+body[data-hc-theme="apple"] button.learn-more-btn {
+    border-color: rgba(255, 255, 255, 0.56) !important;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.025)) !important;
+    box-shadow:
+        0 6px 16px rgba(31, 38, 50, 0.065),
+        inset 0 1px 0 rgba(255, 255, 255, 0.94),
+        inset 0 -1px 0 rgba(62, 70, 82, 0.12) !important;
+    -webkit-backdrop-filter: blur(4px) saturate(132%) !important;
+    backdrop-filter: blur(4px) saturate(132%) !important;
+}
+
+/* About uses the same neutral material language. */
+body.about-page[data-hc-theme="apple"] .about-nav {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.070), rgba(255, 255, 255, 0.018));
+}
+
+@media (max-width: 720px) {
+    body[data-hc-theme="apple"] .community-rail {
+        -webkit-backdrop-filter: blur(5px) saturate(132%);
+        backdrop-filter: blur(5px) saturate(132%);
+    }
+
+    html.hc-svg-refraction body[data-hc-theme="apple"] .community-rail {
+        backdrop-filter: blur(4px) saturate(132%) url("#hc-liquid-refraction-pane");
+    }
+}
+
+
+/* =========================================================
+   APPLE LIQUID GLASS — V8 CLEAR LENS / NO FROST
+   ---------------------------------------------------------
+   Target: the clear macOS Control Center material in the
+   supplied references — transmission + refraction + rim,
+   NOT frosted glass.
+
+   The live backdrop stays sharp. The SVG map bends only the
+   perimeter, leaving the center optically calm. Blur is not
+   part of this material pass.
+========================================================= */
+
+body[data-hc-theme="apple"] {
+    --hc-clear-glass-tint: rgba(255, 255, 255, 0.028);
+    --hc-clear-glass-tint-hover: rgba(255, 255, 255, 0.055);
+    --hc-clear-glass-rim: rgba(255, 255, 255, 0.72);
+    --hc-clear-glass-rim-soft: rgba(255, 255, 255, 0.28);
+    --hc-clear-glass-dark-rim: rgba(38, 46, 58, 0.18);
+    --hc-clear-glass-shadow:
+        0 12px 28px rgba(30, 38, 50, 0.075),
+        0 2px 5px rgba(30, 38, 50, 0.035);
+}
+
+/* A neutral optical scene gives clear glass real information to bend.
+   These are background values, not a coloured glow or glass tint. */
+body[data-hc-theme="apple"] .main-app {
+    background:
+        radial-gradient(ellipse 300px 540px at 1% 18%, rgba(255,255,255,.78), transparent 68%),
+        radial-gradient(ellipse 300px 500px at 16% 61%, rgba(112,121,136,.16), transparent 70%),
+        radial-gradient(ellipse 420px 260px at 43% 2%, rgba(255,255,255,.52), transparent 72%),
+        radial-gradient(ellipse 520px 360px at 88% 92%, rgba(118,127,141,.08), transparent 75%),
+        linear-gradient(180deg, #e4e7eb 0%, #dce0e5 100%);
+}
+
+body[data-hc-theme="apple"] .welcome-experience,
+body[data-hc-theme="apple"] .scene-intro {
+    background:
+        radial-gradient(ellipse 420px 520px at 4% 24%, rgba(255,255,255,.72), transparent 70%),
+        radial-gradient(ellipse 430px 380px at 91% 77%, rgba(115,124,139,.10), transparent 74%),
+        linear-gradient(180deg, #e5e8ec 0%, #dde1e6 100%);
+}
+
+/* Macro glass: almost no fill. Definition comes from the live backdrop,
+   optical displacement, a thin rim and a small physical shadow. */
+body[data-hc-theme="apple"] .community-rail,
+body[data-hc-theme="apple"] .app-sidebar,
+body[data-hc-theme="apple"] .welcome-nav,
+body[data-hc-theme="apple"] .app-modal,
+body.about-page[data-hc-theme="apple"] .about-nav {
+    background: var(--hc-clear-glass-tint);
+    border: 1px solid rgba(255,255,255,.58);
+    box-shadow:
+        var(--hc-clear-glass-shadow),
+        inset 0 1px 0 rgba(255,255,255,.88),
+        inset 0 -1px 0 var(--hc-clear-glass-dark-rim),
+        inset 1px 0 0 rgba(255,255,255,.30),
+        inset -1px 0 0 rgba(43,51,64,.09);
+    -webkit-backdrop-filter: saturate(118%) contrast(1.035) brightness(.995);
+    backdrop-filter: saturate(118%) contrast(1.035) brightness(.995);
+}
+
+/* Chromium: true clear-lens path. No blur() here. */
+html.hc-svg-refraction body[data-hc-theme="apple"] .community-rail,
+html.hc-svg-refraction body[data-hc-theme="apple"] .app-sidebar,
+html.hc-svg-refraction body[data-hc-theme="apple"] .welcome-nav,
+html.hc-svg-refraction body[data-hc-theme="apple"] .app-modal,
+html.hc-svg-refraction body.about-page[data-hc-theme="apple"] .about-nav {
+    -webkit-backdrop-filter: saturate(118%) contrast(1.035) brightness(.995);
+    backdrop-filter:
+        url("#hc-liquid-refraction-pane")
+        saturate(118%)
+        contrast(1.035)
+        brightness(.995);
+}
+
+/* Static specular geometry. Bright horizontal rim + darker flanks gives
+   the curved slab a physical edge without a cursor-following spotlight. */
+body[data-hc-theme="apple"] .community-rail::before,
+body[data-hc-theme="apple"] .app-sidebar::before,
+body[data-hc-theme="apple"] .welcome-nav::before,
+body[data-hc-theme="apple"] .app-modal::before {
+    inset: 0;
+    background:
+        linear-gradient(180deg,
+            rgba(255,255,255,.42) 0,
+            rgba(255,255,255,.12) 1px,
+            transparent 8px,
+            transparent calc(100% - 8px),
+            rgba(255,255,255,.10) calc(100% - 1px),
+            rgba(255,255,255,.34) 100%),
+        linear-gradient(90deg,
+            rgba(33,41,54,.10) 0,
+            transparent 8px,
+            transparent calc(100% - 8px),
+            rgba(33,41,54,.08) 100%);
+    opacity: .88;
+}
+
+body[data-hc-theme="apple"] .community-rail::after,
+body[data-hc-theme="apple"] .app-sidebar::after,
+body[data-hc-theme="apple"] .welcome-nav::after,
+body[data-hc-theme="apple"] .app-modal::after {
+    inset: 1px;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.92),
+        inset 0 2px 6px rgba(255,255,255,.10),
+        inset 0 -1px 0 rgba(42,50,62,.15),
+        inset 1px 0 0 rgba(255,255,255,.24),
+        inset -1px 0 0 rgba(42,50,62,.075);
+}
+
+/* Do not paint an opaque sheet inside the sidebar. */
+body[data-hc-theme="apple"] .sidebar-user {
+    background: rgba(255,255,255,.018);
+}
+
+body[data-hc-theme="apple"] .sidebar-tip {
+    border-color: rgba(255,255,255,.38);
+    background: rgba(255,255,255,.035);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.52),
+        0 5px 14px rgba(31,38,50,.028);
+}
+
+body[data-hc-theme="apple"] .sidebar-link:hover,
+body[data-hc-theme="apple"] .sidebar-link.active,
+body[data-hc-theme="apple"] .sidebar-secondary-link:hover,
+body[data-hc-theme="apple"] .channel-link:hover,
+body[data-hc-theme="apple"] .channel-link.active {
+    background: rgba(255,255,255,.065);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.34),
+        inset 0 -1px 0 rgba(38,46,58,.06);
+}
+
+/* Small controls are clear lenses too. */
+body[data-hc-theme="apple"] :is(
+    .rail-logo,
+    .rail-button,
+    .community-rail-icon,
+    .primary-app-btn,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .modal-submit,
+    .reply-composer button,
+    .email-btn,
+    .create-account-btn,
+    .learn-more-btn,
+    .settings-select,
+    .about-back-link
+) {
+    background: rgba(255,255,255,.035);
+    border-color: rgba(255,255,255,.62);
+    box-shadow:
+        0 5px 13px rgba(29,36,48,.055),
+        inset 0 1px 0 rgba(255,255,255,.94),
+        inset 0 -1px 0 rgba(39,47,59,.15),
+        inset 1px 0 0 rgba(255,255,255,.28),
+        inset -1px 0 0 rgba(39,47,59,.07);
+    -webkit-backdrop-filter: saturate(116%) contrast(1.025);
+    backdrop-filter: saturate(116%) contrast(1.025);
+}
+
+html.hc-svg-refraction body[data-hc-theme="apple"] :is(
+    .rail-logo,
+    .rail-button,
+    .community-rail-icon,
+    .primary-app-btn,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .modal-submit,
+    .reply-composer button,
+    .email-btn,
+    .create-account-btn,
+    .learn-more-btn,
+    .about-back-link
+) {
+    -webkit-backdrop-filter: saturate(116%) contrast(1.025);
+    backdrop-filter:
+        url("#hc-liquid-refraction-control")
+        saturate(116%)
+        contrast(1.025);
+}
+
+body[data-hc-theme="apple"] :is(
+    .rail-logo,
+    .rail-button,
+    .community-rail-icon,
+    .primary-app-btn,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .modal-submit,
+    .reply-composer button,
+    .email-btn,
+    .create-account-btn,
+    .learn-more-btn,
+    .about-back-link
+):hover {
+    background: rgba(255,255,255,.070);
+    border-color: rgba(255,255,255,.78);
+    box-shadow:
+        0 6px 15px rgba(29,36,48,.065),
+        inset 0 1px 0 rgba(255,255,255,.98),
+        inset 0 -1px 0 rgba(39,47,59,.14);
+}
+
+/* Blue remains semantic ink only; selected controls do not become blue glass. */
+body[data-hc-theme="apple"] .rail-logo,
+body[data-hc-theme="apple"] .rail-button:hover,
+body[data-hc-theme="apple"] .community-rail-icon:hover,
+body[data-hc-theme="apple"] .community-rail-icon.active,
+body[data-hc-theme="apple"] .category-filter.active,
+body[data-hc-theme="apple"] .join-community-btn:not(.joined),
+body[data-hc-theme="apple"] .primary-app-btn,
+body[data-hc-theme="apple"] .modal-submit,
+body[data-hc-theme="apple"] .reply-composer button,
+body[data-hc-theme="apple"] .email-btn,
+body[data-hc-theme="apple"] .create-account-btn,
+body[data-hc-theme="apple"] .join-community-btn.joined {
+    background: rgba(255,255,255,.045);
+}
+
+body[data-hc-theme="apple"] button.learn-more-btn {
+    background: rgba(255,255,255,.035) !important;
+    border-color: rgba(255,255,255,.62) !important;
+    box-shadow:
+        0 5px 13px rgba(29,36,48,.055),
+        inset 0 1px 0 rgba(255,255,255,.94),
+        inset 0 -1px 0 rgba(39,47,59,.15) !important;
+    -webkit-backdrop-filter: saturate(116%) contrast(1.025) !important;
+    backdrop-filter: saturate(116%) contrast(1.025) !important;
+}
+
+body.about-page[data-hc-theme="apple"] .about-nav {
+    background: rgba(255,255,255,.028);
+}
+
+@media (max-width: 720px) {
+    body[data-hc-theme="apple"] .community-rail {
+        -webkit-backdrop-filter: saturate(116%) contrast(1.025);
+        backdrop-filter: saturate(116%) contrast(1.025);
+    }
+
+    html.hc-svg-refraction body[data-hc-theme="apple"] .community-rail {
+        backdrop-filter: url("#hc-liquid-refraction-pane") saturate(116%) contrast(1.025);
+    }
+}
+
+/* =========================================================
+   APPLE LIQUID GLASS — V9 OPTICAL LENS
+   ---------------------------------------------------------
+   This pass is intentionally NOT frosted glass.
+
+   Material model:
+   live backdrop -> edge refraction -> subtle RGB dispersion
+   -> near-clear transmission -> generated specular rim -> UI.
+
+   The JavaScript optical engine generates a rounded-rect SDF
+   displacement map and specular map for each important surface.
+========================================================= */
+
+body[data-hc-theme="apple"] {
+    --hc-optic-tint: rgba(255, 255, 255, 0.026);
+    --hc-optic-tint-strong: rgba(255, 255, 255, 0.052);
+    --hc-optic-rim-white: rgba(255, 255, 255, 0.76);
+    --hc-optic-rim-dark: rgba(40, 48, 61, 0.14);
+    --hc-optic-shadow:
+        0 18px 42px rgba(34, 43, 57, 0.085),
+        0 3px 9px rgba(34, 43, 57, 0.045),
+        0 1px 1px rgba(255, 255, 255, 0.38);
+}
+
+/* Give the clear lens real luminance changes to bend. The scene remains
+   neutral silver/graphite — no blue material, no rainbow glow. */
+body[data-hc-theme="apple"] .main-app {
+    background:
+        radial-gradient(ellipse 430px 720px at -3% 20%, rgba(255,255,255,.86) 0%, rgba(255,255,255,.34) 35%, transparent 68%),
+        radial-gradient(ellipse 340px 620px at 13% 63%, rgba(83,94,111,.16) 0%, rgba(83,94,111,.07) 32%, transparent 70%),
+        radial-gradient(ellipse 620px 360px at 46% -7%, rgba(255,255,255,.56) 0%, transparent 72%),
+        linear-gradient(112deg, rgba(255,255,255,.30) 0 8%, rgba(126,136,151,.075) 17%, transparent 31%),
+        linear-gradient(180deg, #e4e7eb 0%, #dce0e5 100%);
+    background-attachment: fixed;
+}
+
+body[data-hc-theme="apple"] .welcome-experience,
+body[data-hc-theme="apple"] .scene-intro,
+body.about-page[data-hc-theme="apple"] {
+    background:
+        radial-gradient(ellipse 520px 660px at -2% 22%, rgba(255,255,255,.82), transparent 69%),
+        radial-gradient(ellipse 420px 520px at 15% 68%, rgba(89,99,115,.105), transparent 72%),
+        radial-gradient(ellipse 560px 410px at 88% 78%, rgba(94,104,121,.07), transparent 74%),
+        linear-gradient(180deg, #e6e9ed 0%, #dde1e6 100%);
+}
+
+/* The engine sets --hc-lg-specular-map to a transparent PNG generated from
+   the same rounded-rect geometry as the displacement map. */
+body[data-hc-theme="apple"] .hc-lg-optic {
+    background-color: transparent;
+    background-image:
+        var(--hc-lg-specular-map, linear-gradient(180deg, rgba(255,255,255,.18), transparent 24%)),
+        linear-gradient(145deg, rgba(255,255,255,.034), rgba(255,255,255,.012));
+    background-size: 100% 100%, 100% 100%;
+    background-repeat: no-repeat;
+}
+
+/* Macro panes: near-clear center, thick optical edge, restrained elevation. */
+body[data-hc-theme="apple"] :is(
+    .community-rail,
+    .app-sidebar,
+    .welcome-nav,
+    .app-modal,
+    .about-nav
+) {
+    border: 1px solid rgba(255,255,255,.56);
+    background-color: transparent;
+    background-image:
+        var(--hc-lg-specular-map, linear-gradient(180deg, rgba(255,255,255,.18), transparent 25%)),
+        linear-gradient(145deg, rgba(255,255,255,.040), rgba(255,255,255,.012));
+    background-size: 100% 100%, 100% 100%;
+    box-shadow:
+        var(--hc-optic-shadow),
+        inset 0 1px 0 rgba(255,255,255,.90),
+        inset 0 -1px 0 rgba(39,47,60,.14),
+        inset 1px 0 0 rgba(255,255,255,.25),
+        inset -1px 0 0 rgba(39,47,60,.075),
+        inset 0 0 18px rgba(255,255,255,.025);
+}
+
+/* V9 uses dynamic per-element filters. Kill the older V8 static filter path
+   if an earlier class was left on the root by cache/hot reload. */
+html.hc-svg-refraction body[data-hc-theme="apple"] :is(
+    .community-rail,
+    .app-sidebar,
+    .welcome-nav,
+    .app-modal,
+    .about-nav
+) {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+/* A thin conic rim supplies the directional bright/dark edge seen in the
+   Control Center reference. The generated specular map adds the broader glow. */
+body[data-hc-theme="apple"] .community-rail::before,
+body[data-hc-theme="apple"] .app-sidebar::before,
+body[data-hc-theme="apple"] .welcome-nav::before,
+body[data-hc-theme="apple"] .app-modal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 21;
+    padding: 1px;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+        conic-gradient(
+            from 215deg,
+            rgba(255,255,255,.18),
+            rgba(255,255,255,.92) 14%,
+            rgba(255,255,255,.36) 31%,
+            rgba(58,67,81,.13) 53%,
+            rgba(255,255,255,.17) 73%,
+            rgba(255,255,255,.66) 88%,
+            rgba(255,255,255,.18)
+        );
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: .74;
+    box-shadow: none;
+}
+
+body[data-hc-theme="apple"] .community-rail::after,
+body[data-hc-theme="apple"] .app-sidebar::after,
+body[data-hc-theme="apple"] .welcome-nav::after,
+body[data-hc-theme="apple"] .app-modal::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: calc(28px - 1px);
+    pointer-events: none;
+    background: none;
+    box-shadow:
+        inset 0 2px 5px rgba(255,255,255,.11),
+        inset 0 -2px 5px rgba(35,43,56,.055),
+        inset 2px 0 5px rgba(255,255,255,.05),
+        inset -2px 0 5px rgba(35,43,56,.035);
+    opacity: 1;
+}
+
+body[data-hc-theme="apple"] .welcome-nav::after {
+    border-radius: 23px;
+}
+
+/* Keep the sidebar interior transparent enough for the live scene to read
+   through it. V8 still had a few white islands that weakened the optical cue. */
+body[data-hc-theme="apple"] .sidebar-user {
+    background: rgba(255,255,255,.010);
+    border-color: rgba(255,255,255,.18);
+}
+
+body[data-hc-theme="apple"] .sidebar-tip {
+    border-color: rgba(255,255,255,.34);
+    background: rgba(255,255,255,.028);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.44),
+        0 7px 18px rgba(31,38,50,.025);
+}
+
+/* ---------------------------------------------------------
+   MOVING LIQUID SELECTION LENSES
+   --------------------------------------------------------- */
+
+.hc-liquid-selector-host {
+    position: relative;
+}
+
+.hc-liquid-selector-host > *:not(.hc-liquid-selector-lens) {
+    position: relative;
+    z-index: 2;
+}
+
+.hc-liquid-selector-lens {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    pointer-events: none;
+    opacity: 0;
+    transform-origin: center;
+    background-color: transparent;
+    background-image:
+        var(--hc-lg-specular-map, linear-gradient(180deg, rgba(255,255,255,.22), transparent 42%)),
+        linear-gradient(145deg, rgba(255,255,255,.105), rgba(255,255,255,.018));
+    background-size: 100% 100%, 100% 100%;
+    border: 1px solid rgba(255,255,255,.67);
+    box-shadow:
+        0 7px 18px rgba(34,43,57,.075),
+        inset 0 1px 0 rgba(255,255,255,.95),
+        inset 0 -1px 0 rgba(41,49,63,.14),
+        inset 1px 0 0 rgba(255,255,255,.30),
+        inset -1px 0 0 rgba(41,49,63,.07);
+    transition: opacity 120ms ease;
+    will-change: transform, left, top, width, height;
+}
+
+body[data-hc-theme="apple"] .hc-liquid-selector-lens.is-visible {
+    opacity: 1;
+}
+
+body:not([data-hc-theme="apple"]) .hc-liquid-selector-lens {
+    display: none !important;
+}
+
+body[data-hc-theme="apple"] .hc-selector-pill {
+    border-radius: 999px !important;
+}
+
+body[data-hc-theme="apple"] .hc-selector-rail {
+    border-radius: 16px !important;
+}
+
+/* Let the moving optical lens, not a painted rectangle, define the active state. */
+body[data-hc-theme="apple"] .sidebar-nav .sidebar-link.active,
+body[data-hc-theme="apple"] #communityChannelList .channel-link.active,
+body[data-hc-theme="apple"] .category-filters .category-filter.active,
+body[data-hc-theme="apple"] .community-rail .rail-logo.active,
+body[data-hc-theme="apple"] .community-rail .community-rail-icon.active {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body[data-hc-theme="apple"] .sidebar-nav .sidebar-link:hover:not(.active),
+body[data-hc-theme="apple"] #communityChannelList .channel-link:hover:not(.active),
+body[data-hc-theme="apple"] .category-filters .category-filter:hover:not(.active) {
+    background: rgba(255,255,255,.045);
+}
+
+/* ---------------------------------------------------------
+   BUTTON / CONTROL MATERIAL
+   --------------------------------------------------------- */
+
+body[data-hc-theme="apple"] :is(
+    .rail-logo,
+    .rail-button,
+    .community-rail-icon,
+    .primary-app-btn,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .modal-submit,
+    .reply-composer button,
+    .email-btn,
+    .create-account-btn,
+    .learn-more-btn,
+    .about-back-link
+) {
+    background: rgba(255,255,255,.025);
+    border-color: rgba(255,255,255,.58);
+    box-shadow:
+        0 5px 12px rgba(29,36,48,.045),
+        inset 0 1px 0 rgba(255,255,255,.90),
+        inset 0 -1px 0 rgba(39,47,59,.12),
+        inset 1px 0 0 rgba(255,255,255,.22),
+        inset -1px 0 0 rgba(39,47,59,.055);
+    -webkit-backdrop-filter: saturate(108%) contrast(1.015);
+    backdrop-filter: saturate(108%) contrast(1.015);
+}
+
+body[data-hc-theme="apple"] :is(
+    .rail-logo,
+    .rail-button,
+    .community-rail-icon,
+    .primary-app-btn,
+    .secondary-app-btn,
+    .category-filter,
+    .join-community-btn,
+    .modal-close,
+    .modal-submit,
+    .reply-composer button,
+    .email-btn,
+    .create-account-btn,
+    .learn-more-btn,
+    .about-back-link
+):hover {
+    background: rgba(255,255,255,.060);
+    border-color: rgba(255,255,255,.75);
+}
+
+@keyframes hcLiquidPress {
+    0%   { transform: scale(1); }
+    34%  { transform: scale(.965, .94); }
+    66%  { transform: scale(1.018, 1.026); }
+    100% { transform: scale(1); }
+}
+
+body[data-hc-theme="apple"] .hc-liquid-press {
+    animation: hcLiquidPress 420ms cubic-bezier(.2,.82,.25,1);
+}
+
+/* ---------------------------------------------------------
+   SETTINGS SWITCH — ACTUAL MOVING CLEAR LENS
+   --------------------------------------------------------- */
+
+body[data-hc-theme="apple"] .settings-switch {
+    width: 42px;
+    height: 24px;
+}
+
+body[data-hc-theme="apple"] .settings-switch-track {
+    border: 1px solid rgba(67,75,88,.15);
+    border-radius: 999px;
+    background: rgba(120,120,128,.22);
+    box-shadow:
+        inset 0 1px 2px rgba(38,46,58,.14),
+        inset 0 0 0 1px rgba(255,255,255,.16);
+    overflow: hidden;
+    transition:
+        background-color 260ms cubic-bezier(.2,.8,.2,1),
+        border-color 260ms cubic-bezier(.2,.8,.2,1),
+        box-shadow 260ms cubic-bezier(.2,.8,.2,1);
+}
+
+body[data-hc-theme="apple"] .settings-switch-track::after {
+    content: none !important;
+    display: none !important;
+}
+
+body[data-hc-theme="apple"] .settings-switch-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    z-index: 2;
+    width: 18px;
+    height: 18px;
+    border: 1px solid rgba(255,255,255,.72);
+    border-radius: 50%;
+    background-color: transparent;
+    background-image:
+        var(--hc-lg-specular-map, radial-gradient(circle at 34% 20%, rgba(255,255,255,.78), transparent 46%)),
+        linear-gradient(145deg, rgba(255,255,255,.44), rgba(255,255,255,.20));
+    background-size: 100% 100%, 100% 100%;
+    box-shadow:
+        0 2px 5px rgba(32,40,52,.19),
+        0 1px 1px rgba(32,40,52,.10),
+        inset 0 1px 0 rgba(255,255,255,.96),
+        inset 0 -1px 0 rgba(42,50,63,.12);
+    transform: translate3d(0,0,0);
+    transform-origin: center;
+    transition: transform 480ms cubic-bezier(.18,1.34,.32,1);
+    will-change: transform;
+}
+
+body[data-hc-theme="apple"] .settings-switch input:checked + .settings-switch-track {
+    border-color: rgba(40,184,82,.90);
+    background: #34c759;
+    box-shadow:
+        inset 0 1px 2px rgba(22,126,54,.22),
+        inset 0 0 0 1px rgba(255,255,255,.12);
+}
+
+body[data-hc-theme="apple"] .settings-switch input:checked + .settings-switch-track .settings-switch-thumb {
+    transform: translate3d(18px,0,0);
+}
+
+body[data-hc-theme="apple"] .settings-switch input:focus-visible + .settings-switch-track {
+    outline: 2px solid rgba(0,113,227,.46);
+    outline-offset: 3px;
+}
+
+/* Keep the material clear on unsupported browsers too. We prefer losing the
+   bend over silently turning the design back into frosted glass. */
+html.hc-optical-fallback body[data-hc-theme="apple"] .hc-lg-optic {
+    -webkit-backdrop-filter: saturate(108%) contrast(1.015);
+    backdrop-filter: saturate(108%) contrast(1.015);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body[data-hc-theme="apple"] .settings-switch-thumb,
+    body[data-hc-theme="apple"] .hc-liquid-selector-lens,
+    body[data-hc-theme="apple"] .hc-liquid-press {
+        animation: none !important;
+        transition-duration: 1ms !important;
+    }
+}
+
+@media (max-width: 720px) {
+    body[data-hc-theme="apple"] .community-rail {
+        background-image:
+            var(--hc-lg-specular-map, linear-gradient(180deg, rgba(255,255,255,.16), transparent 24%)),
+            linear-gradient(145deg, rgba(255,255,255,.034), rgba(255,255,255,.010));
+    }
+}
+
+/* Secondary Home-sidebar destinations (Notifications / Mentions) are derived
+   from the active app page by the optical engine so the same moving lens can
+   travel through the entire sidebar, not only the top three links. */
+body[data-hc-theme="apple"] .sidebar-secondary-link.hc-liquid-current {
+    color: #1d1d1f;
+    background: transparent !important;
+    box-shadow: none !important;
+}
