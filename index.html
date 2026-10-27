@@ -18,6 +18,7 @@
     <title>HC-Community</title>
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="profile-customization.css">
     </head>
 
 <body data-hc-theme="apple">
@@ -1610,6 +1611,14 @@
 
             <button
                 class="secondary-app-btn settings-full-button"
+                id="openProfileCustomizationButton"
+                type="button"
+            >
+                Profile & Decorations
+            </button>
+
+            <button
+                class="secondary-app-btn settings-full-button"
                 id="resetPreferencesButton"
                 type="button"
             >
@@ -1688,6 +1697,77 @@
 </div>
 
 
+
+<!-- =========================================================
+     PROFILE CARD + COSMETICS SHOP
+========================================================= -->
+<div class="modal-backdrop hidden hc-cosmetics-backdrop" id="hcProfileViewModal" aria-hidden="true">
+    <section class="hc-profile-card" role="dialog" aria-modal="true" aria-labelledby="hcProfileDisplayName">
+        <button class="hc-profile-close" type="button" data-hc-close-profile aria-label="Close profile">×</button>
+        <div class="hc-profile-banner" id="hcProfileBanner" data-banner="default"></div>
+        <div class="hc-profile-main">
+            <div class="hc-profile-avatar-wrap" id="hcProfileAvatarWrap" data-frame="none">
+                <div class="hc-profile-avatar" id="hcProfileAvatar">HC</div>
+                <span class="hc-profile-status" aria-label="Online"></span>
+            </div>
+            <div class="hc-profile-identity">
+                <div class="hc-profile-nameplate" id="hcProfileNameplate" data-nameplate="none">
+                    <h2 id="hcProfileDisplayName">Community member</h2>
+                </div>
+                <div class="hc-profile-handle" id="hcProfileHandle">@member</div>
+                <div class="hc-profile-badges" id="hcProfileBadges"></div>
+            </div>
+            <p class="hc-profile-bio" id="hcProfileBio">A member of HC-Community.</p>
+            <div class="hc-profile-divider"></div>
+            <div class="hc-profile-section-label">HC-COMMUNITY</div>
+            <div class="hc-profile-meta" id="hcProfileMeta">Community member</div>
+            <button class="hc-profile-customize-button hidden" id="hcOpenShopFromProfile" type="button">Customize profile</button>
+        </div>
+    </section>
+</div>
+
+<div class="modal-backdrop hidden hc-cosmetics-backdrop" id="hcCosmeticsShopModal" aria-hidden="true">
+    <section class="hc-shop-panel" role="dialog" aria-modal="true" aria-labelledby="hcShopTitle">
+        <div class="hc-shop-header">
+            <div>
+                <p class="page-eyebrow">MAKE IT YOURS</p>
+                <h2 id="hcShopTitle">Profile Shop</h2>
+                <p>Frames, nameplates, and effects for your HC-Com identity.</p>
+            </div>
+            <button class="modal-close" type="button" data-hc-close-shop aria-label="Close shop">×</button>
+        </div>
+        <div class="hc-shop-preview">
+            <div class="hc-shop-preview-avatar" id="hcShopPreviewAvatar" data-frame="classic">HC</div>
+            <div><strong id="hcShopPreviewName">Your profile</strong><span>Live preview</span></div>
+            <span class="hc-shop-preview-tag">PREVIEW</span>
+        </div>
+        <div class="hc-shop-notice" id="hcShopNotice" role="status" aria-live="polite">Free cosmetics can be previewed now. Paid checkout is not connected yet.</div>
+        <div class="hc-shop-grid" id="hcShopGrid">
+            <article class="hc-shop-item" data-item-id="classic-frame">
+                <div class="hc-shop-art hc-shop-art--classic"><span>HC</span></div>
+                <div class="hc-shop-item-copy"><strong>Classic Orbit</strong><span>Clean gradient avatar frame</span><small>FREE</small></div>
+                <button type="button" class="hc-shop-item-action" data-equip-cosmetic="classic-frame">Equip</button>
+            </article>
+            <article class="hc-shop-item" data-item-id="aurora-frame">
+                <div class="hc-shop-art hc-shop-art--aurora"><span>HC</span></div>
+                <div class="hc-shop-item-copy"><strong>Aurora Frame</strong><span>Layered neon edge</span><small>PREMIUM · $2.99</small></div>
+                <button type="button" class="hc-shop-item-action hc-shop-item-action--premium" data-preview-cosmetic="aurora-frame">Preview</button>
+            </article>
+            <article class="hc-shop-item" data-item-id="ember-effect">
+                <div class="hc-shop-art hc-shop-art--ember"><span>HC</span></div>
+                <div class="hc-shop-item-copy"><strong>Ember Halo</strong><span>Warm profile glow</span><small>PREMIUM · $3.99</small></div>
+                <button type="button" class="hc-shop-item-action hc-shop-item-action--premium" data-preview-cosmetic="ember-effect">Preview</button>
+            </article>
+            <article class="hc-shop-item" data-item-id="midnight-nameplate">
+                <div class="hc-shop-art hc-shop-art--nameplate"><span>HC COMMUNITY</span></div>
+                <div class="hc-shop-item-copy"><strong>Midnight Nameplate</strong><span>Subtle dark name background</span><small>PREMIUM · $1.99</small></div>
+                <button type="button" class="hc-shop-item-action hc-shop-item-action--premium" data-preview-cosmetic="midnight-nameplate">Preview</button>
+            </article>
+        </div>
+        <p class="hc-shop-footnote">Premium prices are illustrative. No payment is taken; checkout and secure ownership verification still need to be connected.</p>
+    </section>
+</div>
+
 <!-- =========================================================
      FIREBASE AUTH MODAL
 ========================================================= -->
@@ -1750,6 +1830,7 @@
     <button id="retryEntryButton" class="primary-app-btn" type="button">Try again</button>
 </aside>
 <script src="app.js"></script>
+<script src="profile-customization.js"></script>
 <script type="module" src="firebase-auth.js"></script>
 
 </body>
