@@ -2876,6 +2876,8 @@ function renderCommunityPosts() {
             );
         }
     );
+
+    window.HCProfileCustomization?.hydrateRoleBadges?.(communityPostFeed);
 }
 
 
@@ -2922,9 +2924,18 @@ function createPostElement(
 
     avatar.textContent =
         post.avatar ||
-        post.author
+        (post.author || "?")
             .charAt(0)
             .toUpperCase();
+
+    avatar.classList.add("hc-profile-trigger");
+    avatar.dataset.profileUid = post.authorId || "";
+    avatar.dataset.communityId = post.communityId || "";
+    avatar.dataset.communityName = community?.name || "";
+    avatar.dataset.hcOpenProfile = "true";
+    avatar.tabIndex = 0;
+    avatar.setAttribute("role", "button");
+    avatar.setAttribute("aria-label", "View " + (post.author || "member") + "'s profile");
 
 
     const authorInfo =
@@ -2936,52 +2947,41 @@ function createPostElement(
         "post-author-info";
 
 
-    const author =
-        document.createElement(
-            "strong"
-        );
+    const authorLine = document.createElement("div");
+    authorLine.className = "post-author-line";
+    authorLine.dataset.communityId = post.communityId || "";
+    authorLine.dataset.communityName = community?.name || "";
 
-    author.textContent =
-        post.author;
+    const author = document.createElement("strong");
+    author.className = "hc-profile-trigger post-author-name";
+    author.dataset.profileUid = post.authorId || "";
+    author.dataset.communityId = post.communityId || "";
+    author.dataset.communityName = community?.name || "";
+    author.dataset.hcOpenProfile = "true";
+    author.tabIndex = 0;
+    author.setAttribute("role", "button");
+    author.setAttribute("aria-label", "View " + (post.author || "member") + "'s profile");
+    author.textContent = post.author || "Member";
 
+    if (window.HCFirebaseData?.isDeveloperUid?.(post.authorId)) {
+        author.classList.add("hc-username--developer");
+    }
+    authorLine.appendChild(author);
 
-    const meta =
-        document.createElement(
-            "span"
-        );
-
-    meta.textContent =
-        `${formatTime(post.timestamp)} · #${post.channelId}`;
-
-
-    authorInfo.appendChild(
-        author
-    );
-
-    if (
-        window.HCFirebaseData?.isDeveloperUid?.(
-            post.authorId
-        )
-    ) {
-        const developerBadge =
-            document.createElement(
-                "span"
-            );
-
-        developerBadge.className =
-            "developer-badge inline-developer-badge";
-
-        developerBadge.textContent =
-            "DEV";
-
-        authorInfo.appendChild(
-            developerBadge
-        );
+    if (window.HCFirebaseData?.isDeveloperUid?.(post.authorId)) {
+        const developerBadge = document.createElement("span");
+        developerBadge.className = "developer-badge inline-developer-badge hc-role-badge";
+        developerBadge.innerHTML = '<span class="hc-role-badge-icon" aria-hidden="true">◆</span><span>DEV</span>';
+        developerBadge.setAttribute("aria-label", "HC-Community Developer");
+        authorLine.appendChild(developerBadge);
     }
 
-    authorInfo.appendChild(
-        meta
-    );
+    const meta = document.createElement("span");
+    meta.className = "post-author-meta";
+    meta.textContent = formatTime(post.timestamp) + " · #" + post.channelId;
+
+    authorInfo.appendChild(authorLine);
+    authorInfo.appendChild(meta);
 
 
     header.appendChild(
@@ -3159,13 +3159,20 @@ function createPostElement(
                 "reply-item";
 
 
-            const replyAuthor =
-                document.createElement(
-                    "strong"
-                );
+            const replyAuthor = document.createElement("strong");
+            replyAuthor.className = "hc-profile-trigger reply-author-name";
+            replyAuthor.dataset.profileUid = reply.authorId || "";
+            replyAuthor.dataset.communityId = post.communityId || "";
+            replyAuthor.dataset.communityName = getCommunity(post.communityId)?.name || "";
+            replyAuthor.dataset.hcOpenProfile = "true";
+            replyAuthor.tabIndex = 0;
+            replyAuthor.setAttribute("role", "button");
+            replyAuthor.setAttribute("aria-label", "View " + (reply.author || "member") + "'s profile");
+            replyAuthor.textContent = reply.author || "Member";
 
-            replyAuthor.textContent =
-                reply.author;
+            if (window.HCFirebaseData?.isDeveloperUid?.(reply.authorId)) {
+                replyAuthor.classList.add("hc-username--developer");
+            }
 
 
             const replyTime =
@@ -3200,25 +3207,12 @@ function createPostElement(
                 replyContent
             );
 
-            if (
-                window.HCFirebaseData?.isDeveloperUid?.(
-                    reply.authorId
-                )
-            ) {
-                const replyDeveloperBadge =
-                    document.createElement(
-                        "span"
-                    );
-
-                replyDeveloperBadge.className =
-                    "developer-badge reply-developer-badge";
-
-                replyDeveloperBadge.textContent =
-                    "DEV";
-
-                replyItem.appendChild(
-                    replyDeveloperBadge
-                );
+            if (window.HCFirebaseData?.isDeveloperUid?.(reply.authorId)) {
+                const replyDeveloperBadge = document.createElement("span");
+                replyDeveloperBadge.className = "developer-badge reply-developer-badge hc-role-badge";
+                replyDeveloperBadge.innerHTML = '<span class="hc-role-badge-icon" aria-hidden="true">◆</span><span>DEV</span>';
+                replyDeveloperBadge.setAttribute("aria-label", "HC-Community Developer");
+                replyAuthor.insertAdjacentElement("afterend", replyDeveloperBadge);
             }
 
             if (
