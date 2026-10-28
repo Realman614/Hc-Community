@@ -812,78 +812,6 @@ async function deletePostInFirestore(postId) {
     });
 }
 
-const publicProfileCache = new Map();
-
-async function getPublicProfile(uid) {
-    if (!uid || typeof uid !== "string") return null;
-    if (publicProfileCache.has(uid)) return publicProfileCache.get(uid);
-
-    if (auth.currentUser?.uid === uid && currentProfile) {
-        const ownProfile = {
-            uid,
-            realName: currentProfile.realName || "",
-            username: currentProfile.username || "",
-            bio: currentProfile.bio || "",
-            avatarUrl: currentProfile.avatarUrl || "",
-            bannerUrl: currentProfile.bannerUrl || "",
-            isDeveloper: isDeveloperIdentity(auth.currentUser),
-            moderatorCommunityIds: Array.isArray(currentProfile.moderatorCommunityIds) ? currentProfile.moderatorCommunityIds : [],
-            profileCosmetics: currentProfile.profileCosmetics || {}
-        };
-        publicProfileCache.set(uid, ownProfile);
-        return ownProfile;
-    }
-
-    try {
-        const snapshot = await getDoc(doc(db, "users", uid));
-        if (!snapshot.exists()) return null;
-        const data = snapshot.data();
-        const publicProfile = {
-            uid,
-            realName: String(data.realName || ""),
-            username: String(data.username || ""),
-            bio: String(data.bio || ""),
-            avatarUrl: typeof data.avatarUrl === "string" ? data.avatarUrl : "",
-            bannerUrl: typeof data.bannerUrl === "string" ? data.bannerUrl : "",
-            isDeveloper: uid === DEVELOPER_UID,
-            moderatorCommunityIds: Array.isArray(data.moderatorCommunityIds) ? data.moderatorCommunityIds.filter(value => typeof value === "string") : [],
-            profileCosmetics: data.profileCosmetics && typeof data.profileCosmetics === "object" ? data.profileCosmetics : {}
-        };
-        publicProfileCache.set(uid, publicProfile);
-        return publicProfile;
-    } catch (error) {
-        console.warn("Public profile lookup was unavailable.", error);
-        return null;
-    }
-}
-
-async function saveMyProfileCosmetics(cosmetics) {
-    const user = requireVerifiedUser();
-    if (!currentProfile) throw new Error("Your profile is not ready.");
-
-    const allowedFrames = new Set(["none", "classic"]);
-    const clean = {
-        avatarFrame: allowedFrames.has(cosmetics?.avatarFrame) ? cosmetics.avatarFrame : "none",
-        profileEffect: "none",
-        nameplate: "none"
-    };
-
-    await updateDoc(doc(db, "users", user.uid), { profileCosmetics: clean });
-    currentProfile = { ...currentProfile, profileCosmetics: clean };
-    publicProfileCache.set(user.uid, {
-        uid: user.uid,
-        realName: currentProfile.realName || "",
-        username: currentProfile.username || "",
-        bio: currentProfile.bio || "",
-        avatarUrl: currentProfile.avatarUrl || "",
-        bannerUrl: currentProfile.bannerUrl || "",
-        isDeveloper: isDeveloperIdentity(user),
-        moderatorCommunityIds: Array.isArray(currentProfile.moderatorCommunityIds) ? currentProfile.moderatorCommunityIds : [],
-        profileCosmetics: clean
-    });
-    return clean;
-}
-
 window.HCFirebaseData = {
     getCommunityState,
     joinCommunity: joinCommunityInFirestore,
@@ -896,8 +824,6 @@ window.HCFirebaseData = {
     deleteReply: deleteReplyInFirestore,
     deletePost: deletePostInFirestore,
     getCurrentProfile: () => currentProfile,
-    getPublicProfile,
-    saveMyProfileCosmetics,
     getCurrentUserId: () => auth.currentUser?.uid || null,
     isDeveloper: () => isDeveloperIdentity() && currentProfile?.role === "developer",
     isDeveloperUid: uid => uid === DEVELOPER_UID
